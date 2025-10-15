@@ -1,7 +1,7 @@
 {
   "name": "reynard-tool-calling",
   "version": "0.1.2",
-  "description": "Development and runtime tools for Reynard applications",
+  "description": "AI agent tool calling with MCP integration, Code Mode execution, and advanced algorithms",
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -47,29 +47,31 @@
     "protein-analysis-simple": "tsx ./src/codemode/examples/protein-analysis-simple.ts"
   },
   "keywords": [
-    "tools",
-    "development",
-    "runtime",
     "ai",
     "tool-calling",
-    "reynard"
+    "mcp",
+    "model-context-protocol",
+    "codemode",
+    "algorithms",
+    "typescript",
+    "ai-agents"
   ],
   "author": "Balazs Horvath",
   "license": "MIT",
   "dependencies": {
     "@playwright/test": "1.56.0",
-    "dev-server-management": "workspace:*",
+    "dev-server-management": "^0.44.0",
     "playwright": "1.56.0",
-    "reynard-adr-system": "workspace:*",
-    "reynard-algorithms": "workspace:*",
-    "reynard-api-client": "workspace:*",
-    "reynard-code-quality": "workspace:*",
-    "reynard-dependency-graph": "workspace:*",
-    "reynard-diagram-generator": "workspace:*",
-    "reynard-file-processing": "workspace:*",
-    "reynard-project-architecture": "workspace:*",
-    "reynard-public-package-manager": "workspace:*",
-    "reynard-queue-watcher": "workspace:*"
+    "@entropy-tamer/reynard-adr-system": "^1.0.0",
+    "@entropy-tamer/reynard-algorithms": "^0.3.2",
+    "@entropy-tamer/reynard-api-client": "^0.1.0",
+    "@entropy-tamer/reynard-code-quality": "^0.1.0",
+    "@entropy-tamer/reynard-dependency-graph": "^1.0.0",
+    "@entropy-tamer/reynard-diagram-generator": "^0.1.0",
+    "@entropy-tamer/reynard-file-processing": "^0.2.0",
+    "@entropy-tamer/reynard-project-architecture": "^0.1.0",
+    "@entropy-tamer/reynard-public-package-manager": "^0.1.0",
+    "@entropy-tamer/reynard-queue-watcher": "^0.1.0"
   },
   "devDependencies": {
     "@types/node": "24.7.1",
@@ -86,5 +88,11 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "homepage": "https://github.com/entropy-tamer/reynard-tool-calling",
+  "bugs": "https://github.com/entropy-tamer/reynard-tool-calling/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/entropy-tamer/reynard-tool-calling.git"
   }
 }

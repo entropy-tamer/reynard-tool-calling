@@ -62,13 +62,13 @@ import type { ScreenshotOptions, ScrapeOptions, PDFOptions, BrowserOptions, Test
  * ```
  */
 export class PlaywrightWrapper {
-     * @private
+  /** @private */
   private browser: any = null;
-     * @private
+  /** @private */
   private context: any = null;
-     * @private
+  /** @private */
   private pages: any[] = [];
-     * @private
+  /** @private */
   private isAvailable: boolean = false;
 
   /**
