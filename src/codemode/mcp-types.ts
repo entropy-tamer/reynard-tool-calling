@@ -3,181 +3,299 @@
 export type JsonValue = null | boolean | number | string | JsonValue[] | { [k: string]: JsonValue };
 
 /** Comprehensive git operations tool with pagination support */
-export interface GitToolInput { [k: string]: any }
+export interface GitToolInput {
+  [k: string]: any;
+}
 
 /** Strategically triages backlog items for an AI project */
-export interface FoxTriageBacklogInput { [k: string]: any }
+export interface FoxTriageBacklogInput {
+  [k: string]: any;
+}
 
 /** Plans sprints with capacity analysis and dependency management */
-export interface FoxPlanSprintInput { [k: string]: any }
+export interface FoxPlanSprintInput {
+  [k: string]: any;
+}
 
 /** Generates daily project status reports and identifies blockers */
-export interface FoxDailyStatusInput { [k: string]: any }
+export interface FoxDailyStatusInput {
+  [k: string]: any;
+}
 
 /** Performs proactive risk assessment and mitigation analysis */
-export interface FoxRiskScanInput { [k: string]: any }
+export interface FoxRiskScanInput {
+  [k: string]: any;
+}
 
 /** Coordinates handoff to Success-Advisor-8 for release readiness */
-export interface FoxHandoffToSa8Input { [k: string]: any }
+export interface FoxHandoffToSa8Input {
+  [k: string]: any;
+}
 
 /** Select a random component from the Reynard ecosystem for research analysis with ECS integration */
-export interface SelectResearchComponentInput { [k: string]: any }
+export interface SelectResearchComponentInput {
+  [k: string]: any;
+}
 
 /** Get all available agent spirits from the ECS system */
-export interface GetAvailableSpiritsInput { [k: string]: any }
+export interface GetAvailableSpiritsInput {
+  [k: string]: any;
+}
 
 /** Get all available agent classes from the ECS system */
-export interface GetAvailableClassesInput { [k: string]: any }
+export interface GetAvailableClassesInput {
+  [k: string]: any;
+}
 
 /** Get classes compatible with a specific spirit */
-export interface GetCompatibleClassesInput { [k: string]: any }
+export interface GetCompatibleClassesInput {
+  [k: string]: any;
+}
 
 /** Get statistics about available components and research capabilities */
-export interface GetComponentStatisticsInput { [k: string]: any }
+export interface GetComponentStatisticsInput {
+  [k: string]: any;
+}
 
 /** Search and retrieve papers from arXiv.org with advanced filtering */
-export interface SearchArxivPapersInput { [k: string]: any }
+export interface SearchArxivPapersInput {
+  [k: string]: any;
+}
 
 /** Download a specific arXiv paper by ID */
-export interface DownloadArxivPaperInput { [k: string]: any }
+export interface DownloadArxivPaperInput {
+  [k: string]: any;
+}
 
 /** Download and index an academic paper in Reynard's RAG system */
-export interface DownloadAndIndexPaperInput { [k: string]: any }
+export interface DownloadAndIndexPaperInput {
+  [k: string]: any;
+}
 
 /** Search for papers in the local Reynard paper database */
-export interface SearchLocalPapersInput { [k: string]: any }
+export interface SearchLocalPapersInput {
+  [k: string]: any;
+}
 
 /** Ingest an academic paper into Reynard's RAG system for semantic search */
-export interface IngestPaperToRagInput { [k: string]: any }
+export interface IngestPaperToRagInput {
+  [k: string]: any;
+}
 
 /** Search for academic papers in Reynard's RAG system using semantic search */
-export interface SearchPapersInRagInput { [k: string]: any }
+export interface SearchPapersInRagInput {
+  [k: string]: any;
+}
 
 /** Get statistics about academic papers in Reynard's RAG system */
-export interface GetRagPaperStatsInput { [k: string]: any }
+export interface GetRagPaperStatsInput {
+  [k: string]: any;
+}
 
 /** Perform a comprehensive literature review using all available research tools */
-export interface ComprehensiveLiteratureReviewInput { [k: string]: any }
+export interface ComprehensiveLiteratureReviewInput {
+  [k: string]: any;
+}
 
 /** Perform comprehensive novelty assessment for a research proposal */
-export interface NoveltyAssessmentWorkflowInput { [k: string]: any }
+export interface NoveltyAssessmentWorkflowInput {
+  [k: string]: any;
+}
 
 /** Complete pipeline for discovering, downloading, and indexing research papers */
-export interface ResearchPaperPipelineInput { [k: string]: any }
+export interface ResearchPaperPipelineInput {
+  [k: string]: any;
+}
 
 /** Complete academic review workflow with automated research and analysis */
-export interface AcademicReviewWorkflowInput { [k: string]: any }
+export interface AcademicReviewWorkflowInput {
+  [k: string]: any;
+}
 
 /** Open an image file with the imv image viewer */
-export interface OpenImageInput { [k: string]: any }
+export interface OpenImageInput {
+  [k: string]: any;
+}
 
 /** Retrieve a user secret by name */
-export interface GetSecretInput { [k: string]: any }
+export interface GetSecretInput {
+  [k: string]: any;
+}
 
 /** List all available secrets */
-export interface ListSecretsInput { [k: string]: any }
+export interface ListSecretsInput {
+  [k: string]: any;
+}
 
 /** Check if a secret is available and set */
-export interface CheckSecretInput { [k: string]: any }
+export interface CheckSecretInput {
+  [k: string]: any;
+}
 
 /** Get detailed information about a secret */
-export interface GetSecretInfoInput { [k: string]: any }
+export interface GetSecretInfoInput {
+  [k: string]: any;
+}
 
 /** Get all tool configurations and statistics */
-export interface GetToolConfigsInput { [k: string]: any }
+export interface GetToolConfigsInput {
+  [k: string]: any;
+}
 
 /** Get status of a specific tool or all tools */
-export interface GetToolStatusInput { [k: string]: any }
+export interface GetToolStatusInput {
+  [k: string]: any;
+}
 
 /** Enable a specific tool */
-export interface EnableToolInput { [k: string]: any }
+export interface EnableToolInput {
+  [k: string]: any;
+}
 
 /** Disable a specific tool */
-export interface DisableToolInput { [k: string]: any }
+export interface DisableToolInput {
+  [k: string]: any;
+}
 
 /** Get metadata for a specific tool */
-export interface GetToolMetadataInput { [k: string]: any }
+export interface GetToolMetadataInput {
+  [k: string]: any;
+}
 
 /** List tools grouped by category */
-export interface ListToolsByCategoryInput { [k: string]: any }
+export interface ListToolsByCategoryInput {
+  [k: string]: any;
+}
 
 /** Get current date and time with timezone support */
-export interface GetCurrentTimeInput { [k: string]: any }
+export interface GetCurrentTimeInput {
+  [k: string]: any;
+}
 
 /** Get location based on IP address */
-export interface GetCurrentLocationInput { [k: string]: any }
+export interface GetCurrentLocationInput {
+  [k: string]: any;
+}
 
 /** Send desktop notifications using libnotify */
-export interface SendDesktopNotificationInput { [k: string]: any }
+export interface SendDesktopNotificationInput {
+  [k: string]: any;
+}
 
 /** Execute JavaScript on webpages with session support and intelligent content extraction */
-export interface ExecuteJavascriptInput { [k: string]: any }
+export interface ExecuteJavascriptInput {
+  [k: string]: any;
+}
 
 /** Intelligently extract content from websites using specialized extractors */
-export interface ExtractWebsiteContentInput { [k: string]: any }
+export interface ExtractWebsiteContentInput {
+  [k: string]: any;
+}
 
 /** Get information about browser sessions */
-export interface GetBrowserSessionInfoInput { [k: string]: any }
+export interface GetBrowserSessionInfoInput {
+  [k: string]: any;
+}
 
 /** Test Playwright browser connection and capabilities */
-export interface TestPlaywrightConnectionInput { [k: string]: any }
+export interface TestPlaywrightConnectionInput {
+  [k: string]: any;
+}
 
 /** Take screenshots of webpages using Playwright browser automation */
-export interface TakeWebpageScreenshotInput { [k: string]: any }
+export interface TakeWebpageScreenshotInput {
+  [k: string]: any;
+}
 
 /** Scrape content from webpages using Playwright browser automation */
-export interface ScrapeWebpageContentInput { [k: string]: any }
+export interface ScrapeWebpageContentInput {
+  [k: string]: any;
+}
 
 /** Discover all available VS Code tasks from tasks.json */
-export interface DiscoverVscodeTasksInput { [k: string]: any }
+export interface DiscoverVscodeTasksInput {
+  [k: string]: any;
+}
 
 /** Validate that a VS Code task exists and is executable */
-export interface ValidateVscodeTaskInput { [k: string]: any }
+export interface ValidateVscodeTaskInput {
+  [k: string]: any;
+}
 
 /** Execute a VS Code task by name */
-export interface ExecuteVscodeTaskInput { [k: string]: any }
+export interface ExecuteVscodeTaskInput {
+  [k: string]: any;
+}
 
 /** Get detailed information about a specific VS Code task */
-export interface GetVscodeTaskInfoInput { [k: string]: any }
+export interface GetVscodeTaskInfoInput {
+  [k: string]: any;
+}
 
 /** Get versions of Python, Node.js, npm, pnpm, and TypeScript */
-export interface GetVersionsInput { [k: string]: any }
+export interface GetVersionsInput {
+  [k: string]: any;
+}
 
 /** Get Python version information */
-export interface GetPythonVersionInput { [k: string]: any }
+export interface GetPythonVersionInput {
+  [k: string]: any;
+}
 
 /** Get currently active file path in VS Code */
-export interface GetVscodeActiveFileInput { [k: string]: any }
+export interface GetVscodeActiveFileInput {
+  [k: string]: any;
+}
 
 /** ESLint for TypeScript/JavaScript (with auto-fix) */
-export interface LintFrontendInput { [k: string]: any }
+export interface LintFrontendInput {
+  [k: string]: any;
+}
 
 /** Flake8, Pylint for Python (with auto-fix and error limiting) */
-export interface LintPythonInput { [k: string]: any }
+export interface LintPythonInput {
+  [k: string]: any;
+}
 
 /** markdownlint validation (with auto-fix) */
-export interface LintMarkdownInput { [k: string]: any }
+export interface LintMarkdownInput {
+  [k: string]: any;
+}
 
 /** Execute entire linting suite (with auto-fix) */
-export interface RunAllLintingInput { [k: string]: any }
+export interface RunAllLintingInput {
+  [k: string]: any;
+}
 
 /** Prettier formatting (with check-only mode) */
-export interface FormatFrontendInput { [k: string]: any }
+export interface FormatFrontendInput {
+  [k: string]: any;
+}
 
 /** Black + isort formatting (with check-only mode) */
-export interface FormatPythonInput { [k: string]: any }
+export interface FormatPythonInput {
+  [k: string]: any;
+}
 
 /** Complete security audit (Bandit, audit-ci, type checking) */
-export interface ScanSecurityInput { [k: string]: any }
+export interface ScanSecurityInput {
+  [k: string]: any;
+}
 
 /** Run fast security scanning (skips slow Bandit checks) */
-export interface ScanSecurityFastInput { [k: string]: any }
+export interface ScanSecurityFastInput {
+  [k: string]: any;
+}
 
 /** 🔥 Detect large monolithic files that violate the 140-line axiom with RAG acceleration. Perfect for finding code that needs refactoring into smaller, more maintainable modules. Use this to identify files that are too complex and should be broken down. */
-export interface DetectMonolithsInput { [k: string]: any }
+export interface DetectMonolithsInput {
+  [k: string]: any;
+}
 
 /** 🔍 Deep-dive analysis of a specific file's complexity metrics with intelligent caching. Perfect for understanding why a file is considered a monolith and what specific refactoring opportunities exist. */
-export interface AnalyzeFileComplexityInput { [k: string]: any }
+export interface AnalyzeFileComplexityInput {
+  [k: string]: any;
+}
 
 export interface McpTypesNamespace {
   git_tool(input: GitToolInput): Promise<any>;

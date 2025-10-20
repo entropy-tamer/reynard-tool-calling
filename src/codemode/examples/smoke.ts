@@ -62,20 +62,20 @@ async function main() {
 
     // Perform health check to verify MCP server connectivity
     const status = await cm.healthCheck();
-     
+
     console.log("health:", status);
 
     if (status.ok) {
       // MCP server is available - test code execution through MCP
       const res = await cm.executeCode("console.log('ok'); return 'done';");
-       
+
       console.log("MCP execution result:", res);
     } else {
       // MCP server unavailable - fall back to direct execution mode
-       
+
       console.log("MCP server not available, testing direct execution...");
       const res = await cm.executeCode("console.log('Direct execution works!'); return 'direct-done';");
-       
+
       console.log("Direct execution result:", res);
     }
 
@@ -89,7 +89,7 @@ async function main() {
     }, 100);
   } catch (error) {
     // Log any errors encountered during smoke test execution
-     
+
     console.error("Smoke test failed:", error);
     process.exit(1);
   }
@@ -111,7 +111,6 @@ async function main() {
  * ```
  */
 main().catch(e => {
-   
   console.error(e);
   process.exit(1);
 });

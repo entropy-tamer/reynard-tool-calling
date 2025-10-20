@@ -107,7 +107,7 @@ export class McpClient {
     child.stderr.on("data", d => {
       const stderrData = String(d).trim();
       // Keep stderr visible during development but avoid throwing
-       
+
       console.error("[MCP stderr]", stderrData);
     });
     child.on("exit", (code, signal) => {
