@@ -187,16 +187,19 @@ const cm = await codemode({
 ### Common Issues
 
 **Health Check Failures:**
+
 - Ensure all dependencies are installed: `pnpm install`
 - Check TypeScript compilation: `pnpm build`
 - Verify tool registration: `pnpm list-tools`
 
 **Location API Issues:**
+
 - The system includes automatic fallback to local location
 - Check network connectivity for external API access
 - Fallback location provides basic functionality
 
 **Tool Execution Errors:**
+
 - Check timeout settings for long-running operations
 - Verify file permissions for development tools
 - Ensure required system tools are installed (eslint, prettier, etc.)
