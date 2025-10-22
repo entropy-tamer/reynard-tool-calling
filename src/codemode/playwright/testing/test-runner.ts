@@ -117,8 +117,10 @@ export class TestRunner {
     return allResults;
   }
 
-     * @example
-/** Cleanup browser resources */
+  /**
+   * @example
+   * Cleanup browser resources
+   */
   async cleanup(): Promise<void> {
     if (this.context) {
       await this.context.close();

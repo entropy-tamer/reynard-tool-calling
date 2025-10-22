@@ -4,19 +4,12 @@
  * Native TypeScript implementation of code formatting tools.
  */
 
-import { registerTool } from '../registry';
 import { ToolResult } from '../types';
 
 /**
  * Code formatting tools
  */
 export class FormattingTools {
-  @registerTool({
-    name: 'format_frontend',
-    category: 'development',
-    description: 'Format frontend code with Prettier',
-    enabled: true
-  })
   static async formatFrontend(args: {
     checkOnly?: boolean;
     files?: string[];
@@ -78,12 +71,6 @@ export class FormattingTools {
     }
   }
 
-  @registerTool({
-    name: 'format_python',
-    category: 'development',
-    description: 'Format Python code with Black and isort',
-    enabled: true
-  })
   static async formatPython(args: {
     checkOnly?: boolean;
     files?: string[];

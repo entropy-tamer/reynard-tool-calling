@@ -27,12 +27,12 @@ export type CodeModeConfig = {
  * const result = await cm.executeCode('console.log("Hello from CodeMode!");');
  * ```
  */
-export async function codemode(config: CodeModeConfig) {
+export async function codemode(_config: CodeModeConfig) {
   setupCodemodeEnvironment();
 
   // Use native tools instead of MCP client
   const tools = await buildToolsFacade();
-  const algorithms = (await import("reynard-algorithms")) as Record<string, unknown>;
+  const algorithms = (await import("@entropy-tamer/reynard-algorithms")) as Record<string, unknown>;
   const playwrightPackages = await loadPlaywrightPackages();
   const devToolsPackages: Record<string, unknown> = {};
 
@@ -53,6 +53,8 @@ export async function codemode(config: CodeModeConfig) {
     async executeCode(code: string) {
       return executeUserCode(code, context);
     },
-    // No cleanup needed for native tools
+    cleanup() {
+      // No cleanup needed for native tools
+    }
   };
 }

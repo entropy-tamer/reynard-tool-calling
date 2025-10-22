@@ -4,19 +4,12 @@
  * Native TypeScript implementation of linting tools.
  */
 
-import { registerTool } from '../registry';
 import { ToolResult } from '../types';
 
 /**
  * Frontend linting tools
  */
 export class LintingTools {
-  @registerTool({
-    name: 'lint_frontend',
-    category: 'development',
-    description: 'Run ESLint on frontend code with optional auto-fix',
-    enabled: true
-  })
   static async lintFrontend(args: {
     fix?: boolean;
     files?: string[];
@@ -25,9 +18,9 @@ export class LintingTools {
     try {
       const { fix = false, files = [], config } = args;
       const { spawn } = await import('child_process');
-      const path = await import('path');
+      // const path = await import('path');
 
-      const eslintPath = path.join(process.cwd(), 'node_modules/.bin/eslint');
+      // const eslintPath = path.join(process.cwd(), 'node_modules/.bin/eslint');
       const args_array = [
         ...(fix ? ['--fix'] : []),
         ...(config ? ['--config', config] : []),
@@ -43,6 +36,15 @@ export class LintingTools {
         let stdout = '';
         let stderr = '';
 
+        // Add timeout to prevent hanging
+        const timeout = setTimeout(() => {
+          child.kill('SIGTERM');
+          resolve({
+            success: false,
+            error: 'ESLint timed out after 30 seconds'
+          });
+        }, 30000);
+
         child.stdout.on('data', (data) => {
           stdout += data.toString();
         });
@@ -52,6 +54,7 @@ export class LintingTools {
         });
 
         child.on('close', (code) => {
+          clearTimeout(timeout);
           const success = code === 0;
           resolve({
             success,
@@ -66,6 +69,7 @@ export class LintingTools {
         });
 
         child.on('error', (error) => {
+          clearTimeout(timeout);
           resolve({
             success: false,
             error: `Failed to run ESLint: ${error.message}`
@@ -80,12 +84,6 @@ export class LintingTools {
     }
   }
 
-  @registerTool({
-    name: 'lint_python',
-    category: 'development',
-    description: 'Run Python linting with flake8 and pylint',
-    enabled: true
-  })
   static async lintPython(args: {
     files?: string[];
     usePylint?: boolean;
@@ -143,12 +141,6 @@ export class LintingTools {
     }
   }
 
-  @registerTool({
-    name: 'lint_markdown',
-    category: 'development',
-    description: 'Run markdownlint on markdown files',
-    enabled: true
-  })
   static async lintMarkdown(args: {
     files?: string[];
     config?: string;

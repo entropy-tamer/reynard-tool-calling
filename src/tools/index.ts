@@ -11,6 +11,9 @@ export * from './registry';
 export * from './agent';
 export * from './development';
 
+// Register all tools
+import './register-tools';
+
 // Tool facade for codemode integration
 export async function buildToolsFacade() {
   return {
@@ -25,13 +28,24 @@ export async function buildToolsFacade() {
 }
 
 // Get all registered tools
-export function getAllTools() {
-  const { getToolRegistry } = require('./registry');
-  return getToolRegistry().listTools();
+export async function getAllTools() {
+  try {
+    const { getToolRegistry } = await import('./registry');
+    return getToolRegistry().listTools();
+  } catch (error) {
+    return [];
+  }
 }
 
 // Execute a tool by name
 export async function executeTool(name: string, args: Record<string, any>) {
-  const { getToolRegistry } = require('./registry');
-  return getToolRegistry().executeTool(name, args);
+  try {
+    const { getToolRegistry } = await import('./registry');
+    return getToolRegistry().executeTool(name, args);
+  } catch (error) {
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : 'Tool execution failed'
+    };
+  }
 }

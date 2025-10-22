@@ -5,19 +5,12 @@
  * These tools integrate with the backend ECS system for agent naming.
  */
 
-import { registerTool } from '../registry';
 import { ToolResult } from '../types';
 
 /**
  * Agent naming and identity tools
  */
 export class NamingTools {
-  @registerTool({
-    name: 'generate_agent_name',
-    category: 'agent',
-    description: 'Generate agent name with specialist and style parameters',
-    enabled: true
-  })
   static async generateAgentName(args: {
     specialist: string;
     style: string;
@@ -41,12 +34,6 @@ export class NamingTools {
     }
   }
 
-  @registerTool({
-    name: 'assign_agent_name',
-    category: 'agent',
-    description: 'Assign generated name to agent with persistence',
-    enabled: true
-  })
   static async assignAgentName(args: {
     agentId: string;
     name: string;
@@ -89,12 +76,6 @@ export class NamingTools {
     }
   }
 
-  @registerTool({
-    name: 'get_agent_name',
-    category: 'agent',
-    description: 'Retrieve current agent name',
-    enabled: true
-  })
   static async getAgentName(args: {
     agentId: string;
   }): Promise<ToolResult> {
@@ -137,12 +118,6 @@ export class NamingTools {
     }
   }
 
-  @registerTool({
-    name: 'list_agent_names',
-    category: 'agent',
-    description: 'List all assigned agent names',
-    enabled: true
-  })
   static async listAgentNames(): Promise<ToolResult> {
     try {
       const fs = await import('fs/promises');

@@ -4,19 +4,12 @@
  * Native TypeScript implementation of desktop notification tools.
  */
 
-import { registerTool } from '../registry';
 import { ToolResult } from '../types';
 
 /**
  * Desktop notification tools
  */
 export class NotificationTools {
-  @registerTool({
-    name: 'send_desktop_notification',
-    category: 'agent',
-    description: 'Send desktop notification using system notification service',
-    enabled: true
-  })
   static async sendDesktopNotification(args: {
     title: string;
     message: string;
@@ -25,7 +18,7 @@ export class NotificationTools {
     timeout?: number;
   }): Promise<ToolResult> {
     try {
-      const { title, message, icon, sound = true, timeout = 5000 } = args;
+      const { title, message, icon, timeout = 5000 } = args;
 
       // Use Node.js child_process to call notify-send (Linux) or osascript (macOS)
       const { spawn } = await import('child_process');
@@ -94,12 +87,6 @@ export class NotificationTools {
     }
   }
 
-  @registerTool({
-    name: 'send_system_alert',
-    category: 'agent',
-    description: 'Send system alert with sound and visual notification',
-    enabled: true
-  })
   static async sendSystemAlert(args: {
     title: string;
     message: string;

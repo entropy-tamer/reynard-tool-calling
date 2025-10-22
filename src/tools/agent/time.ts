@@ -4,19 +4,12 @@
  * Native TypeScript implementation of time-related agent tools.
  */
 
-import { registerTool } from '../registry';
 import { ToolResult } from '../types';
 
 /**
  * Get current time and date information
  */
 export class TimeTools {
-  @registerTool({
-    name: 'get_current_time',
-    category: 'agent',
-    description: 'Get current date and time information',
-    enabled: true
-  })
   static async getCurrentTime(): Promise<ToolResult> {
     try {
       const now = new Date();
@@ -50,12 +43,6 @@ export class TimeTools {
     }
   }
 
-  @registerTool({
-    name: 'get_timezone_info',
-    category: 'agent',
-    description: 'Get detailed timezone information',
-    enabled: true
-  })
   static async getTimezoneInfo(): Promise<ToolResult> {
     try {
       const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;

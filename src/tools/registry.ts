@@ -97,7 +97,7 @@ export function getToolRegistry(): NativeToolRegistry {
   return globalRegistry;
 }
 
-// Tool registration decorator
+// Tool registration function (simplified without decorators)
 export function registerTool(config: {
   name: string;
   category: string;
@@ -105,22 +105,16 @@ export function registerTool(config: {
   enabled?: boolean;
   dependencies?: string[];
   config?: Record<string, any>;
-}) {
-  return function(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
-    const handler: ToolHandler = descriptor.value;
-    
-    const metadata: ToolMetadata = {
-      name: config.name,
-      category: config.category,
-      description: config.description,
-      enabled: config.enabled ?? true,
-      dependencies: config.dependencies ?? [],
-      config: config.config ?? {},
-      handler
-    };
-
-    getToolRegistry().registerTool(metadata);
-    
-    return descriptor;
+}, handler: ToolHandler) {
+  const metadata: ToolMetadata = {
+    name: config.name,
+    category: config.category,
+    description: config.description,
+    enabled: config.enabled ?? true,
+    dependencies: config.dependencies ?? [],
+    config: config.config ?? {},
+    handler
   };
+
+  getToolRegistry().registerTool(metadata);
 }
