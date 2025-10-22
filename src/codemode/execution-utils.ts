@@ -8,7 +8,7 @@
  */
 
 import { createRequire } from "module";
-import { McpClient } from "./mcp-client";
+// MCP client import removed - using native tools instead
 
 /**
  * Sets up environment variables to prevent git hooks during codemode execution.
@@ -36,13 +36,9 @@ export function setupCodemodeEnvironment(): void {
  * // Returns { search_files: async (input) => ..., read_file: async (input) => ... }
  * ```
  */
-export async function buildMcpFacade(client: McpClient): Promise<Record<string, (input: any) => Promise<any>>> {
-  const tools = await client.toolsList();
-  const mcp: Record<string, (input: any) => Promise<any>> = {};
-  for (const t of tools) {
-    mcp[t.name] = async (input: any) => client.toolsCall(t.name, input);
-  }
-  return mcp;
+export async function buildToolsFacade() {
+  const { buildToolsFacade } = await import("../tools");
+  return buildToolsFacade();
 }
 
 /**
@@ -129,7 +125,7 @@ export async function executeUserCode(code: string, context: any): Promise<any> 
   try {
     const modules = createNodeModules();
     const func = new Function(
-      "mcp",
+      "tools",
       "algorithms",
       "playwright",
       "devToolsPackages",
@@ -157,7 +153,7 @@ export async function executeUserCode(code: string, context: any): Promise<any> 
     );
 
     const result = await func(
-      context.mcp,
+      context.tools,
       context.algorithms,
       context.playwrightPackages,
       context.devToolsPackages,

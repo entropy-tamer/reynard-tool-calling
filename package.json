@@ -44,7 +44,8 @@
     "playwright": "timeout 60s tsx ./src/codemode/examples/playwright-demo.ts",
     "playwright-install": "playwright install chromium",
     "protein-analysis": "tsx ./src/codemode/examples/protein-analysis-demo.ts",
-    "protein-analysis-simple": "tsx ./src/codemode/examples/protein-analysis-simple.ts"
+    "protein-analysis-simple": "tsx ./src/codemode/examples/protein-analysis-simple.ts",
+    "native-tools": "tsx ./src/codemode/examples/native-tools-demo.ts"
   },
   "keywords": [
     "ai",
@@ -60,18 +61,23 @@
   "license": "MIT",
   "dependencies": {
     "@playwright/test": "1.56.0",
-    "dev-server-management": "^0.44.1",
+    "dev-server-management": "^0.44.2",
     "playwright": "1.56.0",
-    "@entropy-tamer/reynard-algorithms": "^0.44.1",
-    "@entropy-tamer/reynard-adr-system": "^0.44.1",
-    "@entropy-tamer/reynard-api-client": "^0.44.1",
-    "@entropy-tamer/reynard-code-quality": "^0.44.1",
-    "@entropy-tamer/reynard-dependency-graph": "^0.44.1",
-    "@entropy-tamer/reynard-diagram-generator": "^0.44.1",
-    "@entropy-tamer/reynard-file-processing": "^0.44.1",
-    "@entropy-tamer/reynard-project-architecture": "^0.44.1",
-    "@entropy-tamer/reynard-public-package-manager": "^0.44.1",
-    "@entropy-tamer/reynard-queue-watcher": "^0.44.1"
+    "@entropy-tamer/reynard-algorithms": "^0.44.2",
+    "@entropy-tamer/reynard-adr-system": "^0.44.2",
+    "@entropy-tamer/reynard-api-client": "^0.44.2",
+    "@entropy-tamer/reynard-code-quality": "^0.44.2",
+    "@entropy-tamer/reynard-dependency-graph": "^0.44.2",
+    "@entropy-tamer/reynard-diagram-generator": "^0.44.2",
+    "@entropy-tamer/reynard-file-processing": "^0.44.2",
+    "@entropy-tamer/reynard-project-architecture": "^0.44.2",
+    "@entropy-tamer/reynard-public-package-manager": "^0.44.2",
+    "@entropy-tamer/reynard-queue-watcher": "^0.44.2",
+    "simple-git": "^3.21.0",
+    "node-notifier": "^10.0.1",
+    "@mermaid-js/mermaid-cli": "^10.9.1",
+    "sharp": "^0.33.2",
+    "glob": "^10.3.10"
   },
   "devDependencies": {
     "@types/node": "24.9.1",
