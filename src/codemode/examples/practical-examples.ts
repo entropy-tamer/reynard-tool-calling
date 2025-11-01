@@ -142,22 +142,22 @@ async function main() {
     await cm.executeCode(`
       console.log("💓 Gathering system information and monitoring health...");
       
-      if (typeof mcp !== 'undefined') {
+      if (typeof tools !== 'undefined') {
         try {
           // Get current time
-          if (mcp.get_current_time) {
-            const timeResult = await mcp.get_current_time();
+          if (tools.get_current_time) {
+            const timeResult = await tools.get_current_time();
             console.log("⏰ Current time:", timeResult);
           }
           
           // Get current location
-          if (mcp.get_current_location) {
-            const locationResult = await mcp.get_current_location();
+          if (tools.get_current_location) {
+            const locationResult = await tools.get_current_location();
             console.log("🌍 Current location:", locationResult);
           }
           
           // List available tools
-          const toolNames = Object.keys(mcp);
+          const toolNames = Object.keys(tools);
           console.log("🛠️ Available MCP tools:", toolNames.length);
           console.log("   - Sample tools:", toolNames.slice(0, 5).join(', '));
           

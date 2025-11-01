@@ -163,7 +163,7 @@ async function main() {
     await cm.executeCode(`
       console.log("💓 Monitoring system health and generating alerts...");
       
-      if (typeof mcp !== 'undefined' && typeof algorithms !== 'undefined') {
+      if (typeof tools !== 'undefined' && typeof algorithms !== 'undefined') {
         const { PerformanceTimer, MemoryMonitor } = algorithms;
         
         const timer = new PerformanceTimer();
@@ -216,12 +216,12 @@ async function main() {
         
         // Get current time for timestamp
         try {
-          if (mcp.get_current_time) {
-            const timeResult = await mcp.get_current_time();
-            console.log(\`   - Timestamp: \${timeResult}\`);
+          if (tools.agent?.TimeTools?.getCurrentTime) {
+            const timeResult = await tools.agent.TimeTools.getCurrentTime();
+            console.log(\`   - Timestamp: \${JSON.stringify(timeResult)}\`);
           }
         } catch (e) {
-          console.log("   - Timestamp: [MCP unavailable]");
+          console.log("   - Timestamp: [Tools unavailable]");
         }
         
       } else {

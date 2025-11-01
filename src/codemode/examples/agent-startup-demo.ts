@@ -10,8 +10,8 @@ async function demonstrateAgentStartup() {
   console.log("1. Basic Agent Context Setup");
   const result1 = await cm.executeCode(`
     // Get current time and location for agent context
-    const timeResult = await mcp.get_current_time();
-    const locationResult = await mcp.get_current_location();
+    const timeResult = await tools.get_current_time();
+    const locationResult = await tools.get_current_location();
     
     const currentTime = timeResult.content?.[0]?.text || 'Unknown time';
     const currentLocation = locationResult.content?.[0]?.text || 'Unknown location';
@@ -20,7 +20,7 @@ async function demonstrateAgentStartup() {
     console.log('Current location:', currentLocation);
     
     // Get available spirits for agent selection
-    const spiritsResult = await mcp.get_available_spirits();
+    const spiritsResult = await tools.get_available_spirits();
     const availableSpirits = spiritsResult.content?.[0]?.text || 'No spirits available';
     
     console.log('Available spirits:', availableSpirits);
@@ -44,8 +44,8 @@ async function demonstrateAgentStartup() {
   console.log("2. Agent Spirit and Class Selection");
   const result2 = await cm.executeCode(`
     // Get available spirits and classes for agent configuration
-    const spiritsResult = await mcp.get_available_spirits();
-    const classesResult = await mcp.get_available_classes();
+    const spiritsResult = await tools.get_available_spirits();
+    const classesResult = await tools.get_available_classes();
     
     const availableSpirits = spiritsResult.content?.[0]?.text || 'No spirits';
     const availableClasses = classesResult.content?.[0]?.text || 'No classes';
@@ -54,7 +54,7 @@ async function demonstrateAgentStartup() {
     console.log('Available classes:', availableClasses);
     
     // Get component statistics
-    const statsResult = await mcp.get_component_statistics();
+    const statsResult = await tools.get_component_statistics();
     const componentStats = statsResult.content?.[0]?.text || 'No stats';
     
     console.log('Component statistics:', componentStats);
@@ -78,9 +78,9 @@ async function demonstrateAgentStartup() {
   console.log("3. Agent Tool Configuration");
   const result3 = await cm.executeCode(`
     // Get tool configurations and status
-    const toolConfigsResult = await mcp.get_tool_configs();
-    const toolStatusResult = await mcp.get_tool_status();
-    const toolMetadataResult = await mcp.get_tool_metadata();
+    const toolConfigsResult = await tools.get_tool_configs();
+    const toolStatusResult = await tools.get_tool_status();
+    const toolMetadataResult = await tools.get_tool_metadata();
     
     const toolConfigs = toolConfigsResult.content?.[0]?.text || 'No configs';
     const toolStatus = toolStatusResult.content?.[0]?.text || 'No status';
@@ -91,7 +91,7 @@ async function demonstrateAgentStartup() {
     console.log('Tool metadata:', toolMetadata);
     
     // List tools by category
-    const toolsByCategoryResult = await mcp.list_tools_by_category();
+    const toolsByCategoryResult = await tools.list_tools_by_category();
     const toolsByCategory = toolsByCategoryResult.content?.[0]?.text || 'No categories';
     
     console.log('Tools by category:', toolsByCategory);
@@ -120,8 +120,8 @@ async function demonstrateAgentStartup() {
     const devTools = {};
     
     // Test version information
-    const versionsResult = await mcp.get_versions();
-    const pythonVersionResult = await mcp.get_python_version();
+    const versionsResult = await tools.get_versions();
+    const pythonVersionResult = await tools.get_python_version();
     
     devTools.versions = versionsResult.content?.[0]?.text || 'No versions';
     devTools.pythonVersion = pythonVersionResult.content?.[0]?.text || 'No Python version';
@@ -130,13 +130,13 @@ async function demonstrateAgentStartup() {
     console.log('Python version:', devTools.pythonVersion);
     
     // Test VS Code integration
-    const vscodeTasksResult = await mcp.discover_vscode_tasks();
+    const vscodeTasksResult = await tools.discover_vscode_tasks();
     const vscodeTasks = vscodeTasksResult.content?.[0]?.text || 'No VS Code tasks';
     
     console.log('VS Code tasks:', vscodeTasks);
     
     // Test desktop notification
-    const notificationResult = await mcp.send_desktop_notification({
+    const notificationResult = await tools.send_desktop_notification({
       title: "Agent Startup Demo",
       message: "Agent development tools are working!"
     });
@@ -168,32 +168,32 @@ async function demonstrateAgentStartup() {
     console.log('Starting complete agent workflow...');
     
     // Step 1: Get available spirits and select one
-    const spiritsResult = await mcp.get_available_spirits();
+    const spiritsResult = await tools.get_available_spirits();
     const availableSpirits = spiritsResult.content?.[0]?.text || 'No spirits';
     console.log('Available spirits:', availableSpirits);
     
     // Step 2: Get current time for context
-    const timeResult = await mcp.get_current_time();
+    const timeResult = await tools.get_current_time();
     const currentTime = timeResult.content?.[0]?.text || 'Unknown time';
     console.log('Current time:', currentTime);
     
     // Step 3: Get location for context
-    const locationResult = await mcp.get_current_location();
+    const locationResult = await tools.get_current_location();
     const location = locationResult.content?.[0]?.text || 'Unknown location';
     console.log('Current location:', location);
     
     // Step 4: Get system information
-    const versionsResult = await mcp.get_versions();
+    const versionsResult = await tools.get_versions();
     const systemVersions = versionsResult.content?.[0]?.text || 'No versions';
     console.log('System versions:', systemVersions);
     
     // Step 5: Test development capabilities
-    const vscodeTasksResult = await mcp.discover_vscode_tasks();
+    const vscodeTasksResult = await tools.discover_vscode_tasks();
     const vscodeTasks = vscodeTasksResult.content?.[0]?.text || 'No VS Code tasks';
     console.log('VS Code tasks available:', vscodeTasks);
     
     // Step 6: Send startup notification
-    const notificationResult = await mcp.send_desktop_notification({
+    const notificationResult = await tools.send_desktop_notification({
       title: "Agent Workflow Complete",
       message: \`Agent \${workflowAgentId} has completed startup workflow\`
     });

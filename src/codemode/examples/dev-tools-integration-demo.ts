@@ -23,7 +23,7 @@ async function main() {
     const health = await cm.healthCheck();
     console.log(`✅ Code Mode Health: ${health.ok ? 'OK' : 'FAILED'}`);
     if (health.ok) {
-      console.log(`📊 Available MCP Tools: ${health.count}\n`);
+      console.log(`📊 Available Native Tools: ${health.count}\n`);
     }
 
     // Demo 1: Code Quality Analysis
@@ -318,7 +318,7 @@ async function main() {
         console.log("🔐 Authentication: secure token management");
         console.log("📧 Email services: agent communication");
         console.log("🌍 ECS world: agent simulation, breeding");
-        console.log("🛠️ MCP bridge: tool calling integration");
+        console.log("🛠️ Native tools: codemode integration");
         
       } catch (error) {
         console.log("⚠️ API client:", error.message);

@@ -48,7 +48,7 @@ async function main() {
         queueWatcher: typeof queueWatcher !== 'undefined',
         apiClient: typeof apiClient !== 'undefined',
         algorithms: typeof algorithms !== 'undefined',
-        mcp: typeof mcp !== 'undefined'
+        tools: typeof tools !== 'undefined'
       };
       
       const availableCount = Object.values(packages).filter(Boolean).length;
@@ -62,9 +62,9 @@ async function main() {
         console.log("🎯 Available algorithms:", Object.keys(algorithms).slice(0, 5));
       }
       
-      if (packages.mcp) {
+      if (packages.tools) {
         console.log("✅ MCP tools are available!");
-        console.log("🛠️ MCP tools:", Object.keys(mcp).slice(0, 5));
+        console.log("🛠️ MCP tools:", Object.keys(tools).slice(0, 5));
       }
     `);
 
@@ -113,15 +113,15 @@ async function main() {
     await cm.executeCode(`
       console.log("🛠️ Testing MCP tools...");
       
-      if (typeof mcp !== 'undefined') {
+      if (typeof tools !== 'undefined') {
         try {
           // List available tools
-          const toolNames = Object.keys(mcp);
+          const toolNames = Object.keys(tools);
           console.log("📋 Available MCP tools:", toolNames.slice(0, 10));
           
           // Test a simple tool call (if available)
-          if (mcp.get_current_time) {
-            const timeResult = await mcp.get_current_time();
+          if (tools.get_current_time) {
+            const timeResult = await tools.get_current_time();
             console.log("⏰ Current time:", timeResult);
           }
           
