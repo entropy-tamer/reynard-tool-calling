@@ -103,10 +103,10 @@ async function debugCollisionIssue() {
       }
     };
   `);
-  
+
   console.log("Debug Result:", result.returned);
   console.log("Debug Logs:", result.logs);
-  
+
   // Cleanup
   cm.cleanup();
   setTimeout(() => process.exit(0), 100);

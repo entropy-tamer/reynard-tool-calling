@@ -2,7 +2,7 @@
 
 /**
  * 🦊 Practical Examples - Useful Things AI Agents Can Do
- * 
+ *
  * Demonstrates real-world applications using available tools:
  * - Algorithms package for data analysis and optimization
  * - MCP tools for system interaction and automation
@@ -14,9 +14,9 @@ async function main() {
   console.log("🦊 Practical Examples - AI Agent Capabilities");
   console.log("=============================================\n");
 
-  const cm = await codemode({ 
+  const cm = await codemode({
     projectRoot: "/home/kade/runeset/reynard",
-    timeoutMs: 15_000
+    timeoutMs: 15_000,
   });
 
   try {
@@ -344,7 +344,6 @@ async function main() {
     console.log("   4. 🔄 Data Processing and Analysis Pipeline");
     console.log("   5. 🧠 Intelligent Resource Management");
     console.log("🚀 AI agents can now perform sophisticated analysis and optimization!");
-
   } catch (error) {
     console.error("❌ Examples failed:", error instanceof Error ? error.message : String(error));
   } finally {
@@ -359,10 +358,12 @@ const timeout = setTimeout(() => {
   process.exit(1);
 }, 20_000); // 20 second total timeout
 
-main().catch((error) => {
-  console.error("❌ Examples error:", error instanceof Error ? error.message : String(error));
-  clearTimeout(timeout);
-  process.exit(1);
-}).finally(() => {
-  clearTimeout(timeout);
-});
+main()
+  .catch(error => {
+    console.error("❌ Examples error:", error instanceof Error ? error.message : String(error));
+    clearTimeout(timeout);
+    process.exit(1);
+  })
+  .finally(() => {
+    clearTimeout(timeout);
+  });

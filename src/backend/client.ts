@@ -1,6 +1,6 @@
 /**
  * @file Backend Client Integration
- * 
+ *
  * Wraps reynard-api-client for seamless backend access in tools.
  */
 
@@ -18,33 +18,33 @@ export class BackendClient {
 
   constructor(config: BackendClientConfig = {}) {
     this.config = {
-      basePath: process.env.BACKEND_BASE_URL || 'http://localhost:8000',
+      basePath: process.env.BACKEND_BASE_URL || "http://localhost:8000",
       timeout: 30000,
-      ...config
+      ...config,
     };
     // Use config to avoid unused variable warning
-    console.log('Backend client configured for:', this.config.basePath);
-    
+    console.log("Backend client configured for:", this.config.basePath);
+
     // TODO: Implement actual API client integration
     this.client = {
       ecs: {
-        getAgentPersona: async (_args: any) => ({ data: { persona: 'placeholder' } }),
-        generateName: async (_args: any) => ({ data: { name: 'Generated-Name-1' } }),
-        createOffspring: async (_args: any) => ({ data: { offspring: 'placeholder' } })
+        getAgentPersona: async (_args: any) => ({ data: { persona: "placeholder" } }),
+        generateName: async (_args: any) => ({ data: { name: "Generated-Name-1" } }),
+        createOffspring: async (_args: any) => ({ data: { offspring: "placeholder" } }),
       },
       rag: {
         queryRag: async (_args: any) => ({ data: { results: [] } }),
-        embedText: async (_args: any) => ({ data: { embedding: [] } })
+        embedText: async (_args: any) => ({ data: { embedding: [] } }),
       },
       caption: {
-        generateCaption: async (_args: any) => ({ data: { caption: 'placeholder' } })
+        generateCaption: async (_args: any) => ({ data: { caption: "placeholder" } }),
       },
       auth: {
-        authenticate: async (_args: any) => ({ data: { token: 'placeholder' } })
+        authenticate: async (_args: any) => ({ data: { token: "placeholder" } }),
       },
       health: {
-        getHealth: async () => ({ data: { status: 'ok' } })
-      }
+        getHealth: async () => ({ data: { status: "ok" } }),
+      },
     };
   }
 

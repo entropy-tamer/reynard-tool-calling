@@ -3,16 +3,16 @@
  * Tests Playwright functionality, service bridge, and E2E test runner
  */
 
-import { describe, it, expect, beforeAll, afterAll } from 'vitest';
-import { codemode } from '../src/codemode/codemode.js';
+import { describe, it, expect, beforeAll, afterAll } from "vitest";
+import { codemode } from "../src/codemode/codemode.js";
 
-describe('Playwright Integration', () => {
+describe("Playwright Integration", () => {
   let cm: any;
 
   beforeAll(async () => {
     cm = await codemode({
-      projectRoot: '/home/kade/runeset/reynard',
-      timeoutMs: 15_000
+      projectRoot: "/home/kade/runeset/reynard",
+      timeoutMs: 15_000,
     });
   });
 
@@ -22,8 +22,8 @@ describe('Playwright Integration', () => {
     }
   });
 
-  describe('Playwright Availability', () => {
-    it('should expose Playwright packages in sandbox', async () => {
+  describe("Playwright Availability", () => {
+    it("should expose Playwright packages in sandbox", async () => {
       const result = await cm.executeCode(`
         return {
           hasPlaywright: !!playwright,
@@ -39,7 +39,7 @@ describe('Playwright Integration', () => {
       expect(result.returned.hasTestRunner).toBe(true);
     });
 
-    it('should handle Playwright unavailability gracefully', async () => {
+    it("should handle Playwright unavailability gracefully", async () => {
       const result = await cm.executeCode(`
         if (!playwright || !playwright.browser) {
           return { error: 'Playwright not available', graceful: true };
@@ -55,8 +55,8 @@ describe('Playwright Integration', () => {
     });
   });
 
-  describe('Playwright Browser Operations', () => {
-    it('should check browser availability', async () => {
+  describe("Playwright Browser Operations", () => {
+    it("should check browser availability", async () => {
       const result = await cm.executeCode(`
         if (!playwright || !playwright.browser) {
           return { error: 'Playwright not available' };
@@ -67,10 +67,10 @@ describe('Playwright Integration', () => {
         };
       `);
 
-      expect(result.returned).toHaveProperty('available');
+      expect(result.returned).toHaveProperty("available");
     });
 
-    it('should handle screenshot operations', async () => {
+    it("should handle screenshot operations", async () => {
       const result = await cm.executeCode(`
         if (!playwright || !playwright.browser) {
           return { error: 'Playwright not available' };
@@ -95,14 +95,14 @@ describe('Playwright Integration', () => {
         }
       `);
 
-      expect(result.returned).toHaveProperty('success');
+      expect(result.returned).toHaveProperty("success");
       if (result.returned.success) {
         expect(result.returned.screenshotSize).toBeGreaterThan(0);
         expect(result.returned.isBuffer).toBe(true);
       }
     });
 
-    it('should handle web scraping operations', async () => {
+    it("should handle web scraping operations", async () => {
       const result = await cm.executeCode(`
         if (!playwright || !playwright.browser) {
           return { error: 'Playwright not available' };
@@ -127,13 +127,13 @@ describe('Playwright Integration', () => {
         }
       `);
 
-      expect(result.returned).toHaveProperty('success');
+      expect(result.returned).toHaveProperty("success");
       if (result.returned.success) {
         expect(result.returned.hasContent).toBe(true);
       }
     });
 
-    it('should handle PDF generation', async () => {
+    it("should handle PDF generation", async () => {
       const result = await cm.executeCode(`
         if (!playwright || !playwright.browser) {
           return { error: 'Playwright not available' };
@@ -158,7 +158,7 @@ describe('Playwright Integration', () => {
         }
       `);
 
-      expect(result.returned).toHaveProperty('success');
+      expect(result.returned).toHaveProperty("success");
       if (result.returned.success) {
         expect(result.returned.pdfSize).toBeGreaterThan(0);
         expect(result.returned.isBuffer).toBe(true);
@@ -166,8 +166,8 @@ describe('Playwright Integration', () => {
     });
   });
 
-  describe('Browser Automation Service Bridge', () => {
-    it('should check service availability', async () => {
+  describe("Browser Automation Service Bridge", () => {
+    it("should check service availability", async () => {
       const result = await cm.executeCode(`
         if (!playwright || !playwright.automation) {
           return { error: 'Browser automation client not available' };
@@ -178,10 +178,10 @@ describe('Playwright Integration', () => {
         };
       `);
 
-      expect(result.returned).toHaveProperty('available');
+      expect(result.returned).toHaveProperty("available");
     });
 
-    it('should handle health check', async () => {
+    it("should handle health check", async () => {
       const result = await cm.executeCode(`
         if (!playwright || !playwright.automation) {
           return { error: 'Browser automation client not available' };
@@ -202,11 +202,11 @@ describe('Playwright Integration', () => {
         }
       `);
 
-      expect(result.returned).toHaveProperty('success');
-      expect(result.returned).toHaveProperty('healthy');
+      expect(result.returned).toHaveProperty("success");
+      expect(result.returned).toHaveProperty("healthy");
     });
 
-    it('should handle content extraction methods', async () => {
+    it("should handle content extraction methods", async () => {
       const result = await cm.executeCode(`
         if (!playwright || !playwright.automation) {
           return { error: 'Browser automation client not available' };
@@ -235,8 +235,8 @@ describe('Playwright Integration', () => {
     });
   });
 
-  describe('E2E Test Runner', () => {
-    it('should expose test runner functionality', async () => {
+  describe("E2E Test Runner", () => {
+    it("should expose test runner functionality", async () => {
       const result = await cm.executeCode(`
         if (!playwright || !playwright.testRunner) {
           return { error: 'E2E test runner not available' };
@@ -254,7 +254,7 @@ describe('Playwright Integration', () => {
       expect(result.returned.hasGenerateReport).toBe(true);
     });
 
-    it('should handle test execution', async () => {
+    it("should handle test execution", async () => {
       const result = await cm.executeCode(`
         if (!playwright || !playwright.testRunner) {
           return { error: 'E2E test runner not available' };
@@ -288,7 +288,7 @@ describe('Playwright Integration', () => {
         }
       `);
 
-      expect(result.returned).toHaveProperty('success');
+      expect(result.returned).toHaveProperty("success");
       if (result.returned.success) {
         expect(result.returned.passed).toBe(true);
         expect(result.returned.duration).toBeGreaterThan(0);
@@ -297,8 +297,8 @@ describe('Playwright Integration', () => {
     });
   });
 
-  describe('Cool Combinations', () => {
-    it('should combine Playwright with algorithms package', async () => {
+  describe("Cool Combinations", () => {
+    it("should combine Playwright with algorithms package", async () => {
       const result = await cm.executeCode(`
         if (!playwright || !playwright.browser || !algorithms) {
           return { error: 'Required packages not available' };
@@ -328,14 +328,14 @@ describe('Playwright Integration', () => {
         }
       `);
 
-      expect(result.returned).toHaveProperty('success');
+      expect(result.returned).toHaveProperty("success");
       if (result.returned.success) {
         expect(result.returned.hasPerformanceTimer).toBe(true);
         expect(result.returned.loadTime).toBeGreaterThan(0);
       }
     });
 
-    it('should combine Playwright with dev-tools packages', async () => {
+    it("should combine Playwright with dev-tools packages", async () => {
       const result = await cm.executeCode(`
         if (!playwright || !playwright.browser || !devToolsPackages) {
           return { error: 'Required packages not available' };
@@ -371,12 +371,12 @@ describe('Playwright Integration', () => {
 
       expect(result.returned.screenshotTaken).toBe(true);
       expect(result.returned.screenshotSize).toBeGreaterThan(0);
-      expect(result.returned).toHaveProperty('hasCodeQuality');
-      expect(result.returned).toHaveProperty('hasDiagramGenerator');
-      expect(result.returned).toHaveProperty('hasFileProcessing');
+      expect(result.returned).toHaveProperty("hasCodeQuality");
+      expect(result.returned).toHaveProperty("hasDiagramGenerator");
+      expect(result.returned).toHaveProperty("hasFileProcessing");
     });
 
-    it('should handle error scenarios gracefully', async () => {
+    it("should handle error scenarios gracefully", async () => {
       const result = await cm.executeCode(`
         const results = {
           playwrightError: false,
@@ -415,13 +415,13 @@ describe('Playwright Integration', () => {
         return results;
       `);
 
-      expect(result.returned).toHaveProperty('playwrightError');
-      expect(result.returned).toHaveProperty('automationError');
+      expect(result.returned).toHaveProperty("playwrightError");
+      expect(result.returned).toHaveProperty("automationError");
     });
   });
 
-  describe('Resource Management', () => {
-    it('should handle cleanup operations', async () => {
+  describe("Resource Management", () => {
+    it("should handle cleanup operations", async () => {
       const result = await cm.executeCode(`
         if (!playwright || !playwright.browser) {
           return { error: 'Playwright not available' };
@@ -449,7 +449,7 @@ describe('Playwright Integration', () => {
         }
       `);
 
-      expect(result.returned).toHaveProperty('success');
+      expect(result.returned).toHaveProperty("success");
       if (result.returned.success) {
         expect(result.returned.screenshotTaken).toBe(true);
         expect(result.returned.cleanupCompleted).toBe(true);

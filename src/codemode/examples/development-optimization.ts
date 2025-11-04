@@ -721,10 +721,10 @@ async function demonstrateDevelopmentOptimization() {
   console.log();
 
   console.log("=== Development Workflow Optimization Complete ===");
-  
+
   // Cleanup MCP client
   cm.cleanup();
-  
+
   // Force exit after cleanup
   setTimeout(() => {
     process.exit(0);
@@ -732,9 +732,7 @@ async function demonstrateDevelopmentOptimization() {
 }
 
 // Run the optimization demonstration
-demonstrateDevelopmentOptimization().catch((error) => {
+demonstrateDevelopmentOptimization().catch(error => {
   console.error("Optimization demo failed:", error);
   process.exit(1);
 });
-
-

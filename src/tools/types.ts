@@ -1,6 +1,6 @@
 /**
  * @file Tool system types and interfaces
- * 
+ *
  * Defines the core interfaces for the native TypeScript tool system
  * that replaces the Python MCP server architecture.
  */
@@ -42,14 +42,7 @@ export interface ToolExecutionContext {
   environment?: Record<string, string>;
 }
 
-export type ToolCategory = 
-  | 'agent'
-  | 'development' 
-  | 'research'
-  | 'search'
-  | 'system'
-  | 'visualization'
-  | 'social';
+export type ToolCategory = "agent" | "development" | "research" | "search" | "system" | "visualization" | "social";
 
 export interface ToolConfig {
   name: string;

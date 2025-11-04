@@ -316,29 +316,36 @@ async function testCollisionDetection() {
 
   // Summary of all tests
   console.log("=== COLLISION DETECTION TEST SUMMARY ===");
-  const allResults = [result1.returned, result2.returned, result3.returned, result4.returned, result5.returned, result6.returned];
+  const allResults = [
+    result1.returned,
+    result2.returned,
+    result3.returned,
+    result4.returned,
+    result5.returned,
+    result6.returned,
+  ];
   const passedTests = allResults.filter(result => result?.passed).length;
   const totalTests = allResults.length;
-  
+
   console.log(`Tests passed: ${passedTests}/${totalTests}`);
-  console.log(`Success rate: ${(passedTests/totalTests*100).toFixed(1)}%`);
-  
+  console.log(`Success rate: ${((passedTests / totalTests) * 100).toFixed(1)}%`);
+
   if (passedTests === totalTests) {
     console.log("✅ ALL TESTS PASSED - Collision detection is working correctly!");
   } else {
     console.log("❌ SOME TESTS FAILED - Collision detection has issues");
   }
-  
+
   console.log("\nDetailed Results:");
   allResults.forEach((result, index) => {
     if (result) {
-      console.log(`${index + 1}. ${result.test}: ${result.passed ? '✅ PASS' : '❌ FAIL'}`);
+      console.log(`${index + 1}. ${result.test}: ${result.passed ? "✅ PASS" : "❌ FAIL"}`);
     }
   });
 
   // Cleanup MCP client
   cm.cleanup();
-  
+
   // Force exit after cleanup
   setTimeout(() => {
     process.exit(0);
@@ -346,8 +353,7 @@ async function testCollisionDetection() {
 }
 
 // Run the collision detection test
-testCollisionDetection().catch((error) => {
+testCollisionDetection().catch(error => {
   console.error("Collision detection test failed:", error);
   process.exit(1);
 });
-

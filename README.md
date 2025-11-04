@@ -1,6 +1,6 @@
 # Reynard AI Tool-Calling System
 
-*Native TypeScript implementation of AI agent tools with comprehensive development capabilities*
+_Native TypeScript implementation of AI agent tools with comprehensive development capabilities_
 
 ## Overview
 
@@ -115,7 +115,7 @@ The location system provides robust geolocation capabilities:
 ### Basic Agent Initialization
 
 ```typescript
-import { codemode } from './src/codemode/codemode.js';
+import { codemode } from "./src/codemode/codemode.js";
 
 const cm = await codemode({ projectRoot: process.cwd() });
 
@@ -128,7 +128,7 @@ const nameResult = await cm.executeCode(`
   return name;
 `);
 
-console.log('Agent name:', nameResult.returned.data.name);
+console.log("Agent name:", nameResult.returned.data.name);
 ```
 
 ### Development Tools Integration
@@ -178,7 +178,7 @@ Tools can be configured through the codemode environment:
 ```typescript
 const cm = await codemode({
   projectRoot: process.cwd(),
-  timeoutMs: 10000 // 10 second timeout
+  timeoutMs: 10000, // 10 second timeout
 });
 ```
 
@@ -259,4 +259,4 @@ For issues and questions:
 
 ---
 
-*Built with the cunning precision of a fox and the systematic approach of the Reynard ecosystem* 🦊
+_Built with the cunning precision of a fox and the systematic approach of the Reynard ecosystem_ 🦊

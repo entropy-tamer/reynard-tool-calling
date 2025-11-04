@@ -2,7 +2,7 @@
 
 /**
  * 🦊 Development Automation - Real Development Tasks
- * 
+ *
  * Shows how AI agents can automate actual development workflows:
  * - Code analysis and optimization
  * - Performance monitoring
@@ -16,9 +16,9 @@ async function main() {
   console.log("🦊 Development Automation - Real Development Tasks");
   console.log("================================================\n");
 
-  const cm = await codemode({ 
+  const cm = await codemode({
     projectRoot: "/home/kade/runeset/reynard",
-    timeoutMs: 20_000
+    timeoutMs: 20_000,
   });
 
   try {
@@ -398,7 +398,6 @@ async function main() {
     console.log("   4. 🧪 Automated Testing Strategy");
     console.log("   5. 🚀 Deployment Readiness Assessment");
     console.log("🚀 AI agents can now automate complex development workflows!");
-
   } catch (error) {
     console.error("❌ Development automation failed:", error instanceof Error ? error.message : String(error));
   } finally {
@@ -413,10 +412,12 @@ const timeout = setTimeout(() => {
   process.exit(1);
 }, 25_000); // 25 second total timeout
 
-main().catch((error) => {
-  console.error("❌ Development automation error:", error instanceof Error ? error.message : String(error));
-  clearTimeout(timeout);
-  process.exit(1);
-}).finally(() => {
-  clearTimeout(timeout);
-});
+main()
+  .catch(error => {
+    console.error("❌ Development automation error:", error instanceof Error ? error.message : String(error));
+    clearTimeout(timeout);
+    process.exit(1);
+  })
+  .finally(() => {
+    clearTimeout(timeout);
+  });

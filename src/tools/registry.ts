@@ -1,11 +1,11 @@
 /**
  * @file Tool Registry System
- * 
+ *
  * Implements the core tool registration and management system
  * that replaces the Python MCP server tool registry.
  */
 
-import { ToolMetadata, ToolRegistry, ToolHandler, ToolResult } from './types';
+import { ToolMetadata, ToolRegistry, ToolHandler, ToolResult } from "./types";
 
 export class NativeToolRegistry implements ToolRegistry {
   private tools: Map<string, ToolMetadata> = new Map();
@@ -13,7 +13,7 @@ export class NativeToolRegistry implements ToolRegistry {
 
   registerTool(metadata: ToolMetadata): void {
     this.tools.set(metadata.name, metadata);
-    
+
     if (!this.categories.has(metadata.category)) {
       this.categories.set(metadata.category, new Set());
     }
@@ -31,7 +31,7 @@ export class NativeToolRegistry implements ToolRegistry {
   listToolsByCategory(category: string): ToolMetadata[] {
     const toolNames = this.categories.get(category);
     if (!toolNames) return [];
-    
+
     return Array.from(toolNames)
       .map(name => this.tools.get(name))
       .filter((tool): tool is ToolMetadata => tool !== undefined);
@@ -65,14 +65,14 @@ export class NativeToolRegistry implements ToolRegistry {
     if (!tool) {
       return {
         success: false,
-        error: `Tool '${name}' not found`
+        error: `Tool '${name}' not found`,
       };
     }
 
     if (!tool.enabled) {
       return {
         success: false,
-        error: `Tool '${name}' is disabled`
+        error: `Tool '${name}' is disabled`,
       };
     }
 
@@ -81,7 +81,7 @@ export class NativeToolRegistry implements ToolRegistry {
     } catch (error) {
       return {
         success: false,
-        error: error instanceof Error ? error.message : String(error)
+        error: error instanceof Error ? error.message : String(error),
       };
     }
   }
@@ -98,14 +98,17 @@ export function getToolRegistry(): NativeToolRegistry {
 }
 
 // Tool registration function (simplified without decorators)
-export function registerTool(config: {
-  name: string;
-  category: string;
-  description: string;
-  enabled?: boolean;
-  dependencies?: string[];
-  config?: Record<string, any>;
-}, handler: ToolHandler) {
+export function registerTool(
+  config: {
+    name: string;
+    category: string;
+    description: string;
+    enabled?: boolean;
+    dependencies?: string[];
+    config?: Record<string, any>;
+  },
+  handler: ToolHandler
+) {
   const metadata: ToolMetadata = {
     name: config.name,
     category: config.category,
@@ -113,7 +116,7 @@ export function registerTool(config: {
     enabled: config.enabled ?? true,
     dependencies: config.dependencies ?? [],
     config: config.config ?? {},
-    handler
+    handler,
   };
 
   getToolRegistry().registerTool(metadata);

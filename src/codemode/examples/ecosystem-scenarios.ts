@@ -463,10 +463,10 @@ async function demonstrateEcosystemScenarios() {
   console.log();
 
   console.log("=== Ecosystem Scenarios Complete ===");
-  
+
   // Cleanup MCP client
   cm.cleanup();
-  
+
   // Force exit after cleanup
   setTimeout(() => {
     process.exit(0);
@@ -474,9 +474,7 @@ async function demonstrateEcosystemScenarios() {
 }
 
 // Run the scenarios
-demonstrateEcosystemScenarios().catch((error) => {
+demonstrateEcosystemScenarios().catch(error => {
   console.error("Scenarios failed:", error);
   process.exit(1);
 });
-
-

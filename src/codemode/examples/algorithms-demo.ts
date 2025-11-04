@@ -263,10 +263,10 @@ async function demonstrateAlgorithms() {
   console.log();
 
   console.log("=== Algorithms Demo Complete ===");
-  
+
   // Cleanup MCP client
   cm.cleanup();
-  
+
   // Force exit after cleanup
   setTimeout(() => {
     process.exit(0);
@@ -274,7 +274,7 @@ async function demonstrateAlgorithms() {
 }
 
 // Run the demo
-demonstrateAlgorithms().catch((error) => {
+demonstrateAlgorithms().catch(error => {
   console.error("Demo failed:", error);
   process.exit(1);
 });

@@ -224,10 +224,10 @@ async function demonstrateAgentStartup() {
   console.log();
 
   console.log("=== Agent Startup Demo Complete ===");
-  
+
   // Cleanup MCP client
   cm.cleanup();
-  
+
   // Force exit after cleanup
   setTimeout(() => {
     process.exit(0);
@@ -235,7 +235,7 @@ async function demonstrateAgentStartup() {
 }
 
 // Run the demo
-demonstrateAgentStartup().catch((error) => {
+demonstrateAgentStartup().catch(error => {
   console.error("Demo failed:", error);
   process.exit(1);
 });

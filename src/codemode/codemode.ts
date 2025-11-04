@@ -32,7 +32,17 @@ export async function codemode(_config: CodeModeConfig) {
 
   // Use native tools instead of MCP client
   const tools = await buildToolsFacade();
-  const algorithms = (await import("@entropy-tamer/reynard-algorithms")) as Record<string, unknown>;
+  
+  // Load algorithms package with error handling for ES module compatibility
+  let algorithms: Record<string, unknown> = {};
+  try {
+    algorithms = (await import("@entropy-tamer/reynard-algorithms")) as Record<string, unknown>;
+  } catch (error) {
+    console.warn("⚠️  Algorithms package failed to load:", (error as Error).message);
+    console.warn("   Continuing without algorithms - some features may be unavailable");
+    // Continue with empty algorithms object
+  }
+  
   const playwrightPackages = await loadPlaywrightPackages();
   const devToolsPackages: Record<string, unknown> = {};
 
@@ -55,6 +65,6 @@ export async function codemode(_config: CodeModeConfig) {
     },
     cleanup() {
       // No cleanup needed for native tools
-    }
+    },
   };
 }

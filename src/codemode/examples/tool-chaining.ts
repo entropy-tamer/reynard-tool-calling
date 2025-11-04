@@ -96,10 +96,10 @@ async function demonstrateToolChaining() {
   console.log();
 
   console.log("=== Demo Complete ===");
-  
+
   // Cleanup
   cm.cleanup();
-  
+
   // Force exit after cleanup
   setTimeout(() => {
     process.exit(0);
@@ -107,7 +107,7 @@ async function demonstrateToolChaining() {
 }
 
 // Run the demo
-demonstrateToolChaining().catch((error) => {
+demonstrateToolChaining().catch(error => {
   console.error("Demo failed:", error);
   process.exit(1);
 });

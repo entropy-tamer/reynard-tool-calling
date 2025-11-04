@@ -2,7 +2,7 @@
 
 /**
  * 🦊 Dev-Tools Integration Demo
- * 
+ *
  * Comprehensive demonstration of all dev-tools packages integrated into Code Mode.
  * Shows how AI agents can leverage the full power of the Reynard development ecosystem.
  */
@@ -13,15 +13,15 @@ async function main() {
   console.log("🦊 Dev-Tools Integration Demo");
   console.log("============================\n");
 
-  const cm = await codemode({ 
+  const cm = await codemode({
     projectRoot: "/home/kade/runeset/reynard", // Use the actual Reynard root
-    timeoutMs: 30_000 // 30 second timeout for comprehensive demos
+    timeoutMs: 30_000, // 30 second timeout for comprehensive demos
   });
 
   try {
     // Health check first
     const health = await cm.healthCheck();
-    console.log(`✅ Code Mode Health: ${health.ok ? 'OK' : 'FAILED'}`);
+    console.log(`✅ Code Mode Health: ${health.ok ? "OK" : "FAILED"}`);
     if (health.ok) {
       console.log(`📊 Available Native Tools: ${health.count}\n`);
     }
@@ -364,7 +364,6 @@ async function main() {
     console.log("✅ All 10+ dev-tools packages successfully integrated");
     console.log("🚀 AI agents now have access to the full Reynard ecosystem");
     console.log("🎯 Ready for advanced development automation!");
-
   } catch (error) {
     console.error("❌ Demo failed:", error);
   } finally {

@@ -616,10 +616,10 @@ async function demonstrateAdvancedAlgorithmUses() {
   console.log();
 
   console.log("=== Advanced Algorithm Uses Complete ===");
-  
+
   // Cleanup MCP client
   cm.cleanup();
-  
+
   // Force exit after cleanup
   setTimeout(() => {
     process.exit(0);
@@ -627,7 +627,7 @@ async function demonstrateAdvancedAlgorithmUses() {
 }
 
 // Run the advanced algorithm demonstration
-demonstrateAdvancedAlgorithmUses().catch((error) => {
+demonstrateAdvancedAlgorithmUses().catch(error => {
   console.error("Advanced algorithm demo failed:", error);
   process.exit(1);
 });

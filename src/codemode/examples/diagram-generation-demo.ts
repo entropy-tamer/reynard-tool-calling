@@ -2,7 +2,7 @@
 
 /**
  * 🎨 Diagram Generation Demo
- * 
+ *
  * Demonstrates the diagram generation capabilities available to AI agents:
  * - Package dependencies visualization
  * - Architecture overview diagrams
@@ -16,9 +16,9 @@ async function main() {
   console.log("🎨 Diagram Generation Demo");
   console.log("=========================\n");
 
-  const cm = await codemode({ 
+  const cm = await codemode({
     projectRoot: "/home/kade/runeset/reynard",
-    timeoutMs: 20_000
+    timeoutMs: 20_000,
   });
 
   try {
@@ -200,7 +200,6 @@ async function main() {
     console.log("   4. 🔗 Component relationships mapping");
     console.log("   5. 📊 Bulk diagram generation");
     console.log("🚀 AI agents can now generate comprehensive project visualizations!");
-
   } catch (error) {
     console.error("❌ Demo failed:", error instanceof Error ? error.message : String(error));
   } finally {
@@ -215,10 +214,12 @@ const timeout = setTimeout(() => {
   process.exit(1);
 }, 25_000); // 25 second total timeout
 
-main().catch((error) => {
-  console.error("❌ Diagram generation demo error:", error instanceof Error ? error.message : String(error));
-  clearTimeout(timeout);
-  process.exit(1);
-}).finally(() => {
-  clearTimeout(timeout);
-});
+main()
+  .catch(error => {
+    console.error("❌ Diagram generation demo error:", error instanceof Error ? error.message : String(error));
+    clearTimeout(timeout);
+    process.exit(1);
+  })
+  .finally(() => {
+    clearTimeout(timeout);
+  });

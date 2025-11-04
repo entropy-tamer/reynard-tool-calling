@@ -558,10 +558,10 @@ async function demonstrateWorkingSpatialNavigation() {
   console.log();
 
   console.log("=== Working Spatial Navigation Demo Complete ===");
-  
+
   // Cleanup MCP client
   cm.cleanup();
-  
+
   // Force exit after cleanup
   setTimeout(() => {
     process.exit(0);
@@ -569,9 +569,7 @@ async function demonstrateWorkingSpatialNavigation() {
 }
 
 // Run the working spatial navigation demonstration
-demonstrateWorkingSpatialNavigation().catch((error) => {
+demonstrateWorkingSpatialNavigation().catch(error => {
   console.error("Working spatial navigation demo failed:", error);
   process.exit(1);
 });
-
-

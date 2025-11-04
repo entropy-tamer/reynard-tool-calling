@@ -25,10 +25,10 @@ async function listAvailableTools() {
 
   console.log("Result:", result.returned);
   console.log("Logs:", result.logs);
-  
+
   // Cleanup
   cm.cleanup();
-  
+
   // Force exit after cleanup
   setTimeout(() => {
     process.exit(0);
@@ -36,7 +36,7 @@ async function listAvailableTools() {
 }
 
 // Run the tool listing
-listAvailableTools().catch((error) => {
+listAvailableTools().catch(error => {
   console.error("Tool listing failed:", error);
   process.exit(1);
 });
