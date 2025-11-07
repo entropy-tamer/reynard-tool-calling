@@ -11,6 +11,7 @@ import { NamingTools } from "./agent/naming";
 import { NotificationTools } from "./agent/notifications";
 import { LintingTools } from "./development/linting";
 import { FormattingTools } from "./development/formatting";
+import { GitTools } from "./development/git";
 
 // Register agent tools
 registerTool(
@@ -170,4 +171,97 @@ registerTool(
     enabled: true,
   },
   async (args: Record<string, any>) => FormattingTools.formatPython(args as { checkOnly?: boolean; files?: string[] })
+);
+
+// Register git tools
+registerTool(
+  {
+    name: "git_status",
+    category: "development",
+    description: "Get git repository status",
+    enabled: true,
+  },
+  async (args: Record<string, any>) => GitTools.gitStatus(args as { cwd?: string; short?: boolean })
+);
+
+registerTool(
+  {
+    name: "git_get_current_branch",
+    category: "development",
+    description: "Get current git branch name",
+    enabled: true,
+  },
+  async (args: Record<string, any>) => GitTools.getCurrentBranch(args as { cwd?: string })
+);
+
+registerTool(
+  {
+    name: "git_check_remote_exists",
+    category: "development",
+    description: "Check if a git remote exists",
+    enabled: true,
+  },
+  async (args: Record<string, any>) => GitTools.checkRemoteExists(args as { remoteName: string; cwd?: string })
+);
+
+registerTool(
+  {
+    name: "git_get_remote_url",
+    category: "development",
+    description: "Get URL for a git remote",
+    enabled: true,
+  },
+  async (args: Record<string, any>) => GitTools.getRemoteUrl(args as { remoteName: string; cwd?: string })
+);
+
+registerTool(
+  {
+    name: "git_add_remote",
+    category: "development",
+    description: "Add or update a git remote",
+    enabled: true,
+  },
+  async (args: Record<string, any>) =>
+    GitTools.addRemote(args as { remoteName: string; url: string; cwd?: string; force?: boolean })
+);
+
+registerTool(
+  {
+    name: "git_push",
+    category: "development",
+    description: "Push to a git remote",
+    enabled: true,
+  },
+  async (args: Record<string, any>) =>
+    GitTools.push(args as { remoteName: string; branch?: string; tags?: boolean; mirror?: boolean; cwd?: string })
+);
+
+registerTool(
+  {
+    name: "git_list_remotes",
+    category: "development",
+    description: "List all git remotes",
+    enabled: true,
+  },
+  async (args: Record<string, any>) => GitTools.listRemotes(args as { cwd?: string })
+);
+
+registerTool(
+  {
+    name: "git_verify_repository",
+    category: "development",
+    description: "Verify git repository integrity",
+    enabled: true,
+  },
+  async (args: Record<string, any>) => GitTools.verifyRepository(args as { cwd?: string })
+);
+
+registerTool(
+  {
+    name: "git_get_latest_commit",
+    category: "development",
+    description: "Get latest commit hash",
+    enabled: true,
+  },
+  async (args: Record<string, any>) => GitTools.getLatestCommit(args as { cwd?: string; short?: boolean })
 );
