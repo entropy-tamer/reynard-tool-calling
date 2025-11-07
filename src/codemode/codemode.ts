@@ -1,8 +1,8 @@
 /**
- * @file Codemode execution environment for running TypeScript/JavaScript code with MCP tools.
+ * @file Codemode execution environment for running TypeScript/JavaScript code with native tools.
  *
  * This module provides a secure execution environment that allows running user-provided
- * TypeScript/JavaScript code with access to MCP (Model Context Protocol) tools, algorithms,
+ * TypeScript/JavaScript code with access to native TypeScript tools, algorithms,
  * Playwright automation, and other development utilities. It includes git hook management
  * and environment isolation to prevent interference with the development workflow.
  *
@@ -17,7 +17,7 @@ export type CodeModeConfig = {
 };
 
 /**
- * Creates a CodeMode execution environment with access to MCP tools, algorithms, and Playwright modules.
+ * Creates a CodeMode execution environment with access to native TypeScript tools, algorithms, and Playwright modules.
  *
  * @param {CodeModeConfig} config - Configuration object containing project root and optional timeout
  * @returns {Promise<CodeModeSandbox>} Promise that resolves to a CodeMode sandbox with execution capabilities
@@ -30,9 +30,9 @@ export type CodeModeConfig = {
 export async function codemode(_config: CodeModeConfig) {
   setupCodemodeEnvironment();
 
-  // Use native tools instead of MCP client
+  // Build native TypeScript tools facade for CodeMode execution
   const tools = await buildToolsFacade();
-  
+
   // Load algorithms package with error handling for ES module compatibility
   let algorithms: Record<string, unknown> = {};
   try {
@@ -42,7 +42,7 @@ export async function codemode(_config: CodeModeConfig) {
     console.warn("   Continuing without algorithms - some features may be unavailable");
     // Continue with empty algorithms object
   }
-  
+
   const playwrightPackages = await loadPlaywrightPackages();
   const devToolsPackages: Record<string, unknown> = {};
 

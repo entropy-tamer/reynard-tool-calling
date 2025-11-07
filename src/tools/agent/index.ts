@@ -2,7 +2,7 @@
  * @file Agent Tools
  *
  * Native TypeScript implementations of agent-related tools
- * that replace the Python MCP server agent tools.
+ * for CodeMode execution.
  */
 
 export * from "./naming";

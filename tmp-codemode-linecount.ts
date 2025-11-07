@@ -11,7 +11,7 @@ async function main() {
       console.log('codemode line count (excluding comments/blank):', count);
       return { count };
     `);
-    console.log('Return:', result.returned);
+    console.log("Return:", result.returned);
   } finally {
     cm.cleanup();
   }
@@ -21,15 +21,3 @@ main().catch(err => {
   console.error(err);
   process.exit(1);
 });
-
-
-
-
-
-
-
-
-
-
-
-

@@ -72,10 +72,7 @@ export class GitTools {
   static async checkRemoteExists(args: { remoteName: string; cwd?: string }): Promise<ToolResult> {
     try {
       const { remoteName, cwd = process.cwd() } = args;
-      const remotes = execSync("git remote", { cwd, encoding: "utf-8" })
-        .trim()
-        .split("\n")
-        .filter(Boolean);
+      const remotes = execSync("git remote", { cwd, encoding: "utf-8" }).trim().split("\n").filter(Boolean);
 
       const exists = remotes.includes(remoteName);
 
@@ -312,4 +309,3 @@ export class GitTools {
     }
   }
 }
-

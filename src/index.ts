@@ -1,7 +1,7 @@
 /**
  * @file Main exports for reynard-tools
  *
- * Primary focus: Code Mode execution with MCP integration
+ * Primary focus: Code Mode execution with native TypeScript tools
  */
 
 // Code Mode functionality - the main feature

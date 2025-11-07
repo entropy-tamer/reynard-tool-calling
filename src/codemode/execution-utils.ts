@@ -8,7 +8,7 @@
  */
 
 import { createRequire } from "module";
-// MCP client import removed - using native tools instead
+// Native TypeScript tools are used for CodeMode execution
 
 /**
  * Sets up environment variables to prevent git hooks during codemode execution.
@@ -26,14 +26,13 @@ export function setupCodemodeEnvironment(): void {
 }
 
 /**
- * Builds an MCP facade from available tools.
+ * Builds a tools facade from available native TypeScript tools.
  *
- * @param client - The MCP client instance
- * @returns Record of tool names to async functions
+ * @returns Record of tool names to async functions organized by category
  * @example
  * ```typescript
- * const facade = await buildMcpFacade(client);
- * // Returns { search_files: async (input) => ..., read_file: async (input) => ... }
+ * const facade = await buildToolsFacade();
+ * // Returns { agent: { ... }, development: { ... }, ... }
  * ```
  */
 export async function buildToolsFacade() {

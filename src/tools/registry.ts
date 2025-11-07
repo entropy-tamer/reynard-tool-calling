@@ -2,7 +2,7 @@
  * @file Tool Registry System
  *
  * Implements the core tool registration and management system
- * that replaces the Python MCP server tool registry.
+ * for CodeMode execution.
  */
 
 import { ToolMetadata, ToolRegistry, ToolHandler, ToolResult } from "./types";

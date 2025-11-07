@@ -1,10 +1,10 @@
 # Reynard AI Tool-Calling System
 
-_Native TypeScript implementation of AI agent tools with comprehensive development capabilities_
+_Native TypeScript CodeMode implementation with comprehensive AI agent tools and development capabilities_
 
 ## Overview
 
-The Reynard AI Tool-Calling system provides a complete native TypeScript implementation of agent tools, replacing the previous Python MCP server. This system offers agent naming, temporal awareness, location detection, development tools, and comprehensive health monitoring.
+The Reynard AI Tool-Calling system provides a complete native TypeScript CodeMode implementation for AI agent tools. This system offers agent naming, temporal awareness, location detection, development tools, and comprehensive health monitoring through CodeMode execution.
 
 ## Quick Start
 
@@ -18,30 +18,30 @@ cd /home/kade/runeset/reynard/packages/ai/tool-calling && pnpm startup-sequence
 
 This command will:
 
-1. **Initialize the native tools system** (replacing the old MCP server)
-2. **Generate an agent name** using the new TypeScript tools
+1. **Initialize the CodeMode tools system** with native TypeScript implementation
+2. **Generate an agent name** using CodeMode tools
 3. **Establish temporal context** with current time and timezone
 4. **Get location information** based on IP address
 5. **Test the tool system** to ensure everything is working
 
 ### Alternative Inline Command
 
-For programmatic access, use the inline command:
+For programmatic access, use the inline command with async IIFE pattern:
 
 ```bash
-cd /home/kade/runeset/reynard/packages/ai/tool-calling && pnpm tsx -e "
-import { codemode } from './src/codemode/codemode.js';
-const cm = await codemode({ projectRoot: process.cwd() });
-const result = await cm.executeCode(\`
-  const nameResult = await tools.agent.NamingTools.generateAgentName({
-    specialist: 'fox', style: 'foundation'
-  });
-  console.log('🦊 Agent name:', nameResult.data.name);
-  return nameResult.data;
-\`);
-console.log('Result:', result.returned);
-cm.cleanup();
-"
+cd /home/kade/runeset/reynard/packages/ai/tool-calling && pnpm tsx -e "(async () => {
+  const { codemode } = await import('./src/codemode/codemode.js');
+  const cm = await codemode({ projectRoot: process.cwd() });
+  const result = await cm.executeCode(\`
+    const nameResult = await tools.agent.NamingTools.generateAgentName({
+      specialist: 'fox', style: 'foundation'
+    });
+    console.log('🦊 Agent name:', nameResult.data.name);
+    return nameResult.data;
+  \`);
+  console.log('Result:', result.returned);
+  cm.cleanup();
+})()"
 ```
 
 ## Available Tools
@@ -80,16 +80,62 @@ cm.cleanup();
 - **`scanSecurityFast`** - Run fast security scanning (skips slow Bandit checks)
 - **`scanSecurityFull`** - Run comprehensive security scanning including Bandit
 
+### 🧮 Algorithms Package
+
+The complete `@entropy-tamer/reynard-algorithms` package (117 exports, 64 classes) is available in codemode through the `algorithms` global object:
+
+**Data Structures:**
+
+- `UnionFind`, `PriorityQueue`, `LRUCache`, `Trie`, `BloomFilter`
+- `FenwickTree`, `IntervalTree`, `SegmentTree`
+
+**Spatial Structures:**
+
+- `SpatialHash`, `KdTree`, `Octree`, `BVH`, `Quadtree`, `RTree`
+
+**Pathfinding:**
+
+- `AStar`, `JPS`, `ThetaStar`, `FlowField`, `HPAStar`, `shadowcastingFOV`
+
+**Computational Geometry:**
+
+- `BresenhamLine`, `DelaunayTriangulation`, `VoronoiDiagram`, `ConvexHull`
+- `OBB`, `MinimumBoundingBox`, `LineIntersection`, `PolygonClipping`
+
+**Collision Detection:**
+
+- `checkCollision`, `SAT`, `SweepPrune`, `SpatialCollisionOptimizer`
+
+**Procedural Generation:**
+
+- `MarchingSquares`, `SimplexNoise`, `PoissonDisk`, `WaveFunctionCollapse`
+
+**Usage:**
+
+```typescript
+// Use algorithms in codemode
+const result = await cm.executeCode(`
+  const uf = new algorithms.UnionFind(10);
+  uf.union(0, 1);
+  return uf.find(0) === uf.find(1); // true
+  
+  const astar = new algorithms.AStar({ width: 10, height: 10 });
+  const path = astar.findPath({ x: 0, y: 0 }, { x: 9, y: 9 });
+  
+  const collision = algorithms.checkCollision(aabb1, aabb2);
+`);
+```
+
 ## Architecture
 
-### Native Tools System
+### CodeMode Architecture
 
-The system uses a modular TypeScript architecture with:
+The system uses a modular TypeScript CodeMode architecture with:
 
 - **Tool Registry**: Central tool registration and management
 - **Tool Categories**: Organized by functionality (agent, development, research, search, system, visualization)
 - **Backend Integration**: Seamless FastAPI backend access
-- **Codemode Integration**: Native tools available in codemode execution context
+- **CodeMode Execution**: All tools available through CodeMode execution context
 - **Type Safety**: Full TypeScript type checking for all tools
 
 ### Health Check System
@@ -121,14 +167,14 @@ const cm = await codemode({ projectRoot: process.cwd() });
 
 // Generate agent name
 const nameResult = await cm.executeCode(`
-  const name = await tools.agent.NamingTools.generateAgentName({
+  const nameResult = await tools.agent.NamingTools.generateAgentName({
     specialist: 'fox',
     style: 'foundation'
   });
-  return name;
+  return nameResult.data;
 `);
 
-console.log("Agent name:", nameResult.returned.data.name);
+console.log("Agent name:", nameResult.returned.name);
 ```
 
 ### Development Tools Integration
@@ -154,12 +200,39 @@ const securityResult = await cm.executeCode(`
 ```typescript
 // Get current time and location
 const contextResult = await cm.executeCode(`
-  const time = await tools.agent.TimeTools.getCurrentTime();
-  const location = await tools.agent.LocationTools.getCurrentLocation();
+  const timeResult = await tools.agent.TimeTools.getCurrentTime();
+  const locationResult = await tools.agent.LocationTools.getCurrentLocation();
   
   return {
-    time: time.data.local,
-    location: \`\${location.data.city}, \${location.data.country}\`
+    time: timeResult.data.local,
+    location: \`\${locationResult.data.city}, \${locationResult.data.country}\`
+  };
+`);
+```
+
+### Algorithms Integration
+
+```typescript
+// Use algorithms package in codemode
+const algoResult = await cm.executeCode(`
+  // Data structures
+  const uf = new algorithms.UnionFind(10);
+  uf.union(0, 1);
+  const connected = uf.find(0) === uf.find(1);
+  
+  // Pathfinding
+  const astar = new algorithms.AStar({ width: 10, height: 10 });
+  const path = astar.findPath({ x: 0, y: 0 }, { x: 9, y: 9 });
+  
+  // Collision detection
+  const aabb1 = { minX: 0, minY: 0, maxX: 10, maxY: 10 };
+  const aabb2 = { minX: 5, minY: 5, maxX: 15, maxY: 15 };
+  const collision = algorithms.checkCollision(aabb1, aabb2);
+  
+  return {
+    unionFind: connected,
+    pathLength: path ? path.length : 0,
+    isColliding: collision.colliding
   };
 `);
 ```

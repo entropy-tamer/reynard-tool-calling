@@ -2,7 +2,7 @@
  * @file Development Tools
  *
  * Native TypeScript implementations of development-related tools
- * that replace the Python MCP server development tools.
+ * for CodeMode execution.
  */
 
 export * from "./linting";

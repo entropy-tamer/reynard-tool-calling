@@ -1,7 +1,7 @@
 /**
  * @file Main Tools Index
  *
- * Exports all native TypeScript tools that replace the Python MCP server.
+ * Exports all native TypeScript tools for CodeMode execution.
  */
 
 export * from "./types";

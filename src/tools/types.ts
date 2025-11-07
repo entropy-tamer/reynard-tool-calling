@@ -2,7 +2,7 @@
  * @file Tool system types and interfaces
  *
  * Defines the core interfaces for the native TypeScript tool system
- * that replaces the Python MCP server architecture.
+ * for CodeMode execution.
  */
 
 export interface ToolMetadata {

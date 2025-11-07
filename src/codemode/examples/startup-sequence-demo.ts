@@ -2,7 +2,7 @@
  * @file Agent Startup Sequence Demo
  *
  * Demonstrates the complete agent startup sequence with native TypeScript tools
- * that replaces the Python MCP server. This includes agent naming, temporal
+ * for CodeMode execution. This includes agent naming, temporal
  * awareness, location detection, and health validation.
  */
 
