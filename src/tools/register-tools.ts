@@ -12,6 +12,7 @@ import { NotificationTools } from "./agent/notifications";
 import { LintingTools } from "./development/linting";
 import { FormattingTools } from "./development/formatting";
 import { GitTools } from "./development/git";
+import { ServiceTools } from "./systemd/ServiceTools";
 
 // Register agent tools
 registerTool(
@@ -264,4 +265,159 @@ registerTool(
     enabled: true,
   },
   async (args: Record<string, any>) => GitTools.getLatestCommit(args as { cwd?: string; short?: boolean })
+);
+
+registerTool(
+  {
+    name: "git_analyze_uncommitted_changes",
+    category: "development",
+    description: "Analyze uncommitted git changes (staged and unstaged) with detailed categorization",
+    enabled: true,
+  },
+  async (args: Record<string, any>) =>
+    GitTools.analyzeUncommittedChanges(args as { cwd?: string; includeStaged?: boolean; includeUnstaged?: boolean })
+);
+
+registerTool(
+  {
+    name: "git_generate_commit_message",
+    category: "development",
+    description: "Generate conventional commit message suggestions based on uncommitted changes",
+    enabled: true,
+  },
+  async (args: Record<string, any>) =>
+    GitTools.generateCommitMessage(args as { cwd?: string; includeStaged?: boolean; includeUnstaged?: boolean })
+);
+
+registerTool(
+  {
+    name: "git_analyze_commit_message_quality",
+    category: "development",
+    description: "Analyze commit message quality and provide improvement suggestions",
+    enabled: true,
+  },
+  async (args: Record<string, any>) => GitTools.analyzeCommitMessageQuality(args as { message: string })
+);
+
+// Register systemd service management tools
+registerTool(
+  {
+    name: "start_service",
+    category: "system",
+    description: "Start a systemd service",
+    enabled: true,
+  },
+  async (args: Record<string, any>) => ServiceTools.startService(args as { name: string })
+);
+
+registerTool(
+  {
+    name: "stop_service",
+    category: "system",
+    description: "Stop a systemd service",
+    enabled: true,
+  },
+  async (args: Record<string, any>) => ServiceTools.stopService(args as { name: string })
+);
+
+registerTool(
+  {
+    name: "restart_service",
+    category: "system",
+    description: "Restart a systemd service",
+    enabled: true,
+  },
+  async (args: Record<string, any>) => ServiceTools.restartService(args as { name: string })
+);
+
+registerTool(
+  {
+    name: "get_service_status",
+    category: "system",
+    description: "Get status and health information for a service",
+    enabled: true,
+  },
+  async (args: Record<string, any>) => ServiceTools.getServiceStatus(args as { name: string })
+);
+
+registerTool(
+  {
+    name: "get_service_metrics",
+    category: "system",
+    description: "Get performance metrics for a service",
+    enabled: true,
+  },
+  async (args: Record<string, any>) => ServiceTools.getServiceMetrics(args as { name: string })
+);
+
+registerTool(
+  {
+    name: "list_services",
+    category: "system",
+    description: "List all managed services",
+    enabled: true,
+  },
+  async (args: Record<string, any>) => ServiceTools.listServices(args as {})
+);
+
+registerTool(
+  {
+    name: "update_service",
+    category: "system",
+    description: "Perform rolling update of a service",
+    enabled: true,
+  },
+  async (args: Record<string, any>) => ServiceTools.updateService(args as { name: string; definition: any })
+);
+
+registerTool(
+  {
+    name: "rollback_service",
+    category: "system",
+    description: "Rollback a service to previous version",
+    enabled: true,
+  },
+  async (args: Record<string, any>) =>
+    ServiceTools.rollbackService(args as { name: string; oldVersion: string; newVersion: string })
+);
+
+registerTool(
+  {
+    name: "get_service_logs",
+    category: "system",
+    description: "Get logs for a service",
+    enabled: true,
+  },
+  async (args: Record<string, any>) => ServiceTools.getServiceLogs(args as { name: string; lines?: number })
+);
+
+registerTool(
+  {
+    name: "export_metrics",
+    category: "system",
+    description: "Export Prometheus metrics for all services",
+    enabled: true,
+  },
+  async (args: Record<string, any>) => ServiceTools.exportMetrics(args as {})
+);
+
+registerTool(
+  {
+    name: "set_service_secret",
+    category: "system",
+    description: "Set a secret for a service",
+    enabled: true,
+  },
+  async (args: Record<string, any>) =>
+    ServiceTools.setSecret(args as { serviceName: string; secretName: string; value: string; encrypt?: boolean })
+);
+
+registerTool(
+  {
+    name: "get_service_secret",
+    category: "system",
+    description: "Get a secret for a service",
+    enabled: true,
+  },
+  async (args: Record<string, any>) => ServiceTools.getSecret(args as { serviceName: string; secretName: string })
 );
