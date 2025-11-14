@@ -10,6 +10,18 @@ import { ToolResult } from "../types";
  * Get current time and date information
  */
 export class TimeTools {
+  /**
+   * Get current time and date information
+   * @returns Promise resolving to ToolResult with current time data
+   * @example
+   * ```typescript
+   * const result = await TimeTools.getCurrentTime();
+   * if (result.success) {
+   *   console.log(result.data.iso); // "2025-01-15T10:30:45.123Z"
+   *   console.log(result.data.timezone); // "America/New_York"
+   * }
+   * ```
+   */
   static async getCurrentTime(): Promise<ToolResult> {
     try {
       const now = new Date();
@@ -43,6 +55,19 @@ export class TimeTools {
     }
   }
 
+  /**
+   * Get timezone information for the current system
+   * @returns Promise resolving to ToolResult with timezone data
+   * @example
+   * ```typescript
+   * const result = await TimeTools.getTimezoneInfo();
+   * if (result.success) {
+   *   console.log(result.data.timezone); // "America/New_York"
+   *   console.log(result.data.utcOffset); // "UTC-5"
+   *   console.log(result.data.isDST); // true or false
+   * }
+   * ```
+   */
   static async getTimezoneInfo(): Promise<ToolResult> {
     try {
       const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -71,6 +96,16 @@ export class TimeTools {
     }
   }
 
+  /**
+   * Check if a date is in Daylight Saving Time
+   * @param date - The date to check
+   * @returns True if the date is in DST, false otherwise
+   * @example
+   * ```typescript
+   * const summerDate = new Date(2025, 6, 15); // July 15, 2025
+   * const isSummerDST = TimeTools.isDST(summerDate); // true (in Northern Hemisphere)
+   * ```
+   */
   private static isDST(date: Date): boolean {
     const jan = new Date(date.getFullYear(), 0, 1);
     const jul = new Date(date.getFullYear(), 6, 1);

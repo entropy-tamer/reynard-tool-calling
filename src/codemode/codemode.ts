@@ -10,10 +10,17 @@
  */
 
 import { setupCodemodeEnvironment, buildToolsFacade, loadPlaywrightPackages, executeUserCode } from "./execution-utils";
+import { setupSSHProxy, cleanupSSHProxy } from "./ssh-proxy";
 
 export type CodeModeConfig = {
   projectRoot: string;
   timeoutMs?: number;
+  sshProxy?: {
+    host: string;
+    port?: number;
+    user?: string;
+    localPort?: number;
+  };
 };
 
 /**
@@ -27,8 +34,19 @@ export type CodeModeConfig = {
  * const result = await cm.executeCode('console.log("Hello from CodeMode!");');
  * ```
  */
-export async function codemode(_config: CodeModeConfig) {
+export async function codemode(config: CodeModeConfig) {
   setupCodemodeEnvironment();
+
+  // Set up SSH proxy if configured
+  let proxyUrl: string | null = null;
+  if (config.sshProxy) {
+    try {
+      proxyUrl = await setupSSHProxy(config.sshProxy);
+    } catch (error) {
+      console.warn("⚠️  SSH proxy setup failed:", (error as Error).message);
+      console.warn("   Continuing without proxy - some network operations may fail");
+    }
+  }
 
   // Build native TypeScript tools facade for CodeMode execution
   const tools = await buildToolsFacade();
@@ -48,13 +66,13 @@ export async function codemode(_config: CodeModeConfig) {
 
   console.log("✅ Native tools system initialized with conditional execution support");
 
-  const context = { tools, algorithms, playwrightPackages, devToolsPackages };
+  const context = { tools, algorithms, playwrightPackages, devToolsPackages, proxyUrl };
 
   return {
     async healthCheck() {
       try {
         const { getAllTools } = await import("../tools");
-        const tools = getAllTools();
+        const tools = await getAllTools();
         return { ok: true, count: tools.length };
       } catch (e) {
         return { ok: false, error: (e as Error).message };
@@ -63,8 +81,11 @@ export async function codemode(_config: CodeModeConfig) {
     async executeCode(code: string) {
       return executeUserCode(code, context);
     },
-    cleanup() {
-      // No cleanup needed for native tools
+    async cleanup() {
+      // Clean up SSH proxy if it was set up
+      if (config.sshProxy) {
+        await cleanupSSHProxy();
+      }
     },
   };
 }

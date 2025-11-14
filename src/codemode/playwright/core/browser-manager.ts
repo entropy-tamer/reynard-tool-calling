@@ -58,10 +58,13 @@ export class BrowserManager {
         timeout: options.timeout ?? 30000,
       });
 
-      this.context = await this.browser.newContext({
+      const contextOptions: { viewport: { width: number; height: number }; userAgent?: string } = {
         viewport: options.viewport ?? { width: 1280, height: 720 },
-        userAgent: options.userAgent,
-      });
+      };
+      if (options.userAgent) {
+        contextOptions.userAgent = options.userAgent;
+      }
+      this.context = await this.browser.newContext(contextOptions);
 
       return this.browser;
     } catch (error) {

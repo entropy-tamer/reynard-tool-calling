@@ -5,7 +5,7 @@
  */
 
 // Code Mode functionality - the main feature
-export * from "./codemode/codemode";
+export * from "./codemode";
 
 // Core types and utilities
 export * from "./core";

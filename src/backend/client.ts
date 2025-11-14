@@ -18,7 +18,7 @@ export class BackendClient {
 
   constructor(config: BackendClientConfig = {}) {
     this.config = {
-      basePath: process.env.BACKEND_BASE_URL || "http://localhost:8000",
+      basePath: process.env["BACKEND_BASE_URL"] || "http://localhost:8000",
       timeout: 30000,
       ...config,
     };

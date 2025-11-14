@@ -20,9 +20,9 @@ import { createRequire } from "module";
  * ```
  */
 export function setupCodemodeEnvironment(): void {
-  process.env.SKIP_GIT_HOOKS = "true";
-  process.env.NODE_ENV = "codemode";
-  process.env.CODEMODE_EXECUTION = "true";
+  process.env["SKIP_GIT_HOOKS"] = "true";
+  process.env["NODE_ENV"] = "codemode";
+  process.env["CODEMODE_EXECUTION"] = "true";
 }
 
 /**
@@ -141,6 +141,7 @@ export async function executeUserCode(code: string, context: any): Promise<any> 
       "console",
       "modules",
       "shouldSkipGitHooks",
+      "proxyUrl",
       `return (async () => { 
         const require = (id) => {
           if (modules[id]) return modules[id];
@@ -168,7 +169,8 @@ export async function executeUserCode(code: string, context: any): Promise<any> 
       context.devToolsPackages.apiClient,
       console,
       modules,
-      shouldSkipGitHooks
+      shouldSkipGitHooks,
+      context.proxyUrl || null
     );
 
     const executionTime = Date.now() - startTime;
@@ -206,8 +208,8 @@ export async function executeUserCode(code: string, context: any): Promise<any> 
  */
 export function shouldSkipGitHooks(): boolean {
   return (
-    process.env.SKIP_GIT_HOOKS === "true" ||
-    process.env.CODEMODE_EXECUTION === "true" ||
-    process.env.NODE_ENV === "codemode"
+    process.env["SKIP_GIT_HOOKS"] === "true" ||
+    process.env["CODEMODE_EXECUTION"] === "true" ||
+    process.env["NODE_ENV"] === "codemode"
   );
 }

@@ -72,10 +72,13 @@ export class TestRunner {
         timeout: config.timeout ?? 30000,
       });
 
-      this.context = await this.browser.newContext({
+      const contextOptions: { viewport: { width: number; height: number }; userAgent?: string } = {
         viewport: config.viewport ?? { width: 1280, height: 720 },
-        userAgent: config.userAgent,
-      });
+      };
+      if (config.userAgent) {
+        contextOptions.userAgent = config.userAgent;
+      }
+      this.context = await this.browser.newContext(contextOptions);
     } catch (error) {
       throw new Error(`Failed to initialize test runner: ${error instanceof Error ? error.message : "Unknown error"}`);
     }

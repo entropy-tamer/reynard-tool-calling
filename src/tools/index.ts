@@ -11,6 +11,7 @@ export * from "./registry";
 export * from "./agent";
 export * from "./development";
 export * from "./systemd";
+export * from "./algorithms";
 
 // Register all tools
 import "./register-tools";
@@ -21,6 +22,7 @@ export async function buildToolsFacade() {
     agent: await import("./agent"),
     development: await import("./development"),
     systemd: await import("./systemd"),
+    algorithms: await import("./algorithms"),
     // TODO: Add other categories as they are implemented
     // research: await import('./research'),
     // search: await import('./search'),

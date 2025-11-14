@@ -16,6 +16,7 @@ let SecretsManager: any;
 
 async function getServiceManager() {
   if (!SystemdServiceManager) {
+    // @ts-expect-error - Module may not exist at compile time, but will be available at runtime
     const module = await import("@entropy-tamer/reynard-service-manager/systemd");
     SystemdServiceManager = module.SystemdServiceManager;
     SystemdClient = module.SystemdClient;
@@ -162,14 +163,14 @@ export class ServiceTools {
   /**
    * List all services
    */
-  static async listServices(args: {}): Promise<ToolResult> {
+  static async listServices(_args: {}): Promise<ToolResult> {
     try {
       const { SystemdServiceManager } = await getServiceManager();
 
       const manager = new SystemdServiceManager();
       const allInfo = await manager.getAllServiceInfo();
 
-      const services = Object.keys(allInfo).map((name) => ({
+      const services = Object.keys(allInfo).map(name => ({
         name,
         status: allInfo[name].status,
         health: allInfo[name].health,
@@ -278,7 +279,7 @@ export class ServiceTools {
   /**
    * Export Prometheus metrics
    */
-  static async exportMetrics(args: {}): Promise<ToolResult> {
+  static async exportMetrics(_args: {}): Promise<ToolResult> {
     try {
       const { SystemdClient, MetricsCollector } = await getServiceManager();
 
@@ -302,7 +303,12 @@ export class ServiceTools {
   /**
    * Set a secret for a service
    */
-  static async setSecret(args: { serviceName: string; secretName: string; value: string; encrypt?: boolean }): Promise<ToolResult> {
+  static async setSecret(args: {
+    serviceName: string;
+    secretName: string;
+    value: string;
+    encrypt?: boolean;
+  }): Promise<ToolResult> {
     try {
       const { serviceName, secretName, value, encrypt = true } = args;
       const { SecretsManager } = await getServiceManager();
@@ -354,9 +360,3 @@ export class ServiceTools {
     }
   }
 }
-
-
-
-
-
-

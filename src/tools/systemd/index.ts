@@ -6,8 +6,5 @@
 
 export * from "./ServiceTools";
 
-
-
-
-
-
+// Registration is handled by the centralized registration system
+// See: tools/registration/systemd.ts

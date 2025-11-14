@@ -67,11 +67,14 @@ export async function takeScreenshotDirect(
 
   try {
     await page.goto(url, { waitUntil: "networkidle", timeout: options.timeout ?? 30000 });
-    return await page.screenshot({
+    const screenshotOptions: { fullPage: boolean; type: "png" | "jpeg"; quality?: number } = {
       fullPage: options.fullPage ?? true,
       type: options.format ?? "png",
-      quality: options.quality,
-    });
+    };
+    if (options.quality !== undefined) {
+      screenshotOptions.quality = options.quality;
+    }
+    return await page.screenshot(screenshotOptions);
   } finally {
     await page.close();
   }

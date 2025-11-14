@@ -102,7 +102,7 @@ export class LocationTools {
       const { latitude, longitude, city, country } = locationResult.data;
 
       // Use OpenWeatherMap API (requires API key)
-      const apiKey = process.env.OPENWEATHER_API_KEY;
+      const apiKey = process.env["OPENWEATHER_API_KEY"];
       if (!apiKey) {
         return {
           success: false,
