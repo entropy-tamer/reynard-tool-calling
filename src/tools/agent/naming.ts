@@ -2,7 +2,7 @@
  * @file Agent Naming Tools
  *
  * Native TypeScript implementation of agent naming tools.
- * These tools integrate with the backend ECS system for agent naming.
+ * Provides simple agent naming and identity management for roleplay purposes.
  */
 
 import { ToolResult } from "../types";

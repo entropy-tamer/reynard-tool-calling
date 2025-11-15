@@ -11,81 +11,153 @@ import { ToolResult } from "../types";
  */
 export class LocationTools {
   static async getCurrentLocation(): Promise<ToolResult> {
-    try {
-      // Use a free IP geolocation service with timeout
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+    // Try multiple IP geolocation services as fallbacks
+    const apis = [
+      {
+        url: "https://ipapi.co/json/",
+        parser: (data: any) => ({
+          ip: data.ip,
+          city: data.city || "Unknown",
+          region: data.region || "Unknown",
+          country: data.country_name || "Unknown",
+          countryCode: data.country_code || "Unknown",
+          latitude: data.latitude || 0,
+          longitude: data.longitude || 0,
+          timezone: data.timezone || "Unknown",
+          utcOffset: data.utc_offset || "Unknown",
+          isp: data.org || "Unknown",
+          asn: data.asn || "Unknown",
+          postal: data.postal || "Unknown",
+          continent: data.continent_code || "Unknown",
+          currency: data.currency || "Unknown",
+          currencyName: data.currency_name || "Unknown",
+          languages: data.languages || "Unknown",
+          callingCode: data.country_calling_code || "Unknown",
+        }),
+      },
+      {
+        url: "https://ipinfo.io/json",
+        parser: (data: any) => {
+          const [lat, lon] = (data.loc || "0,0").split(",").map(Number);
+          return {
+            ip: data.ip,
+            city: data.city || "Unknown",
+            region: data.region || "Unknown",
+            country: LocationTools.getCountryName(data.country) || "Unknown",
+            countryCode: data.country || "Unknown",
+            latitude: lat || 0,
+            longitude: lon || 0,
+            timezone: data.timezone || "Unknown",
+            utcOffset: "Unknown",
+            isp: data.org || "Unknown",
+            asn: "Unknown",
+            postal: data.postal || "Unknown",
+            continent: "Unknown",
+            currency: "Unknown",
+            currencyName: "Unknown",
+            languages: "Unknown",
+            callingCode: "Unknown",
+          };
+        },
+      },
+    ];
 
-      const response = await fetch("https://ipapi.co/json/", {
-        signal: controller.signal,
-      });
+    for (const api of apis) {
+      try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
 
-      clearTimeout(timeoutId);
+        const response = await fetch(api.url, {
+          signal: controller.signal,
+          headers: {
+            "User-Agent": "Reynard-Agent-Tools/1.0",
+          },
+        });
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        clearTimeout(timeoutId);
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const locationData = await response.json();
+
+        // Check if we got valid data
+        if (!locationData || !locationData.ip) {
+          throw new Error("Invalid location data received");
+        }
+
+        const locationInfo = api.parser(locationData);
+
+        return {
+          success: true,
+          data: locationInfo,
+          logs: [`Location: ${locationInfo.city}, ${locationInfo.country}`],
+        };
+      } catch (error) {
+        // Try next API
+        continue;
       }
-
-      const locationData = await response.json();
-
-      // Check if we got valid data
-      if (!locationData || !locationData.ip) {
-        throw new Error("Invalid location data received");
-      }
-
-      const locationInfo = {
-        ip: locationData.ip,
-        city: locationData.city || "Unknown",
-        region: locationData.region || "Unknown",
-        country: locationData.country_name || "Unknown",
-        countryCode: locationData.country_code || "Unknown",
-        latitude: locationData.latitude || 0,
-        longitude: locationData.longitude || 0,
-        timezone: locationData.timezone || "Unknown",
-        utcOffset: locationData.utc_offset || "Unknown",
-        isp: locationData.org || "Unknown",
-        asn: locationData.asn || "Unknown",
-        postal: locationData.postal || "Unknown",
-        continent: locationData.continent_code || "Unknown",
-        currency: locationData.currency || "Unknown",
-        currencyName: locationData.currency_name || "Unknown",
-        languages: locationData.languages || "Unknown",
-        callingCode: locationData.country_calling_code || "Unknown",
-      };
-
-      return {
-        success: true,
-        data: locationInfo,
-        logs: [`Location: ${locationInfo.city}, ${locationInfo.country}`],
-      };
-    } catch (error) {
-      // Return a fallback location if API fails
-      const fallbackLocation = {
-        ip: "127.0.0.1",
-        city: "Local",
-        region: "Local",
-        country: "Local",
-        countryCode: "LOC",
-        latitude: 0,
-        longitude: 0,
-        timezone: "UTC",
-        utcOffset: "+00:00",
-        isp: "Local Network",
-        asn: "Unknown",
-        postal: "00000",
-        continent: "Unknown",
-        currency: "USD",
-        currencyName: "US Dollar",
-        languages: "en",
-        callingCode: "+1",
-      };
-
-      return {
-        success: true,
-        data: fallbackLocation,
-        logs: [`Location API unavailable, using fallback: ${fallbackLocation.city}, ${fallbackLocation.country}`],
-      };
     }
+
+    // If all APIs fail, return a fallback location
+    const fallbackLocation = {
+      ip: "127.0.0.1",
+      city: "Local",
+      region: "Local",
+      country: "Local",
+      countryCode: "LOC",
+      latitude: 0,
+      longitude: 0,
+      timezone: "UTC",
+      utcOffset: "+00:00",
+      isp: "Local Network",
+      asn: "Unknown",
+      postal: "00000",
+      continent: "Unknown",
+      currency: "USD",
+      currencyName: "US Dollar",
+      languages: "en",
+      callingCode: "+1",
+    };
+
+    return {
+      success: true,
+      data: fallbackLocation,
+      logs: [`Location API unavailable, using fallback: ${fallbackLocation.city}, ${fallbackLocation.country}`],
+    };
+  }
+
+  private static getCountryName(countryCode: string): string {
+    const countryMap: Record<string, string> = {
+      US: "United States",
+      GB: "United Kingdom",
+      DE: "Germany",
+      FR: "France",
+      IT: "Italy",
+      ES: "Spain",
+      NL: "Netherlands",
+      BE: "Belgium",
+      AT: "Austria",
+      CH: "Switzerland",
+      SE: "Sweden",
+      NO: "Norway",
+      DK: "Denmark",
+      FI: "Finland",
+      PL: "Poland",
+      CZ: "Czech Republic",
+      AU: "Australia",
+      CA: "Canada",
+      JP: "Japan",
+      CN: "China",
+      IN: "India",
+      BR: "Brazil",
+      MX: "Mexico",
+      AR: "Argentina",
+      ZA: "South Africa",
+      RU: "Russia",
+    };
+    return countryMap[countryCode] || countryCode;
   }
 
   static async getWeatherInfo(): Promise<ToolResult> {

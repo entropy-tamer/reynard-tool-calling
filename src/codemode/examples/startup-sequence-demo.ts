@@ -17,52 +17,62 @@ async function main() {
     timeoutMs: 10000,
   });
 
-  // Test health check
+  // Health check
   console.log("\n📊 Health Check:");
   const health = await cm.healthCheck();
   console.log("Health:", health);
 
-  // Test agent tools
-  console.log("\n🦊 Agent Tools:");
-  const timeResult = await cm.executeCode(`
-    const time = await tools.agent.TimeTools.getCurrentTime();
-    console.log('Current time:', time.data.iso);
-    return time;
-  `);
-  console.log("Time result:", timeResult.returned);
-
-  // Test location tools
-  console.log("\n🌍 Location Tools:");
-  const locationResult = await cm.executeCode(`
-    const location = await tools.agent.LocationTools.getCurrentLocation();
-    console.log('Location:', location.data.city, location.data.country);
-    return location;
-  `);
-  console.log("Location result:", locationResult.returned);
-
-  // Test naming tools
-  console.log("\n🏷️ Naming Tools:");
-  const namingResult = await cm.executeCode(`
-    const name = await tools.agent.NamingTools.generateAgentName({
-      specialist: 'fox',
+  // Complete startup sequence - generate name, assign it, get context
+  console.log("\n✨ Generating Agent Identity...");
+  const result = await cm.executeCode(`
+    // Step 1: Choose your spirit (randomly selected from available specialists)
+    const specialists = ['fox', 'wolf', 'otter', 'eagle', 'lion'];
+    const spirit = specialists[Math.floor(Math.random() * specialists.length)];
+    
+    // Step 2: Generate your name based on your spirit
+    const nameResult = await tools.agent.NamingTools.generateAgentName({
+      specialist: spirit,
       style: 'foundation'
     });
-    console.log('Generated name:', name.data.name);
-    return name;
-  `);
-  console.log("Naming result:", namingResult.returned);
+    
+    // Step 3: Assign your name (makes it persistent!)
+    await tools.agent.NamingTools.assignAgentName({
+      agentId: 'current-session',
+      name: nameResult.data.name
+    });
 
-  // Test development tools (skip linting to avoid hanging)
-  console.log("\n🛠️ Development Tools:");
-  console.log("Skipping linting test to avoid hanging on large codebase...");
-  const devResult = await cm.executeCode(`
-    console.log('Development tools available but skipping linting test');
-    return { message: 'Development tools ready', linting: 'skipped' };
-  `);
-  console.log("Dev result:", devResult.returned);
+    // Step 4: Get temporal context
+    const timeResult = await tools.agent.TimeTools.getCurrentTime();
+    
+    // Step 5: Get location context
+    const locationResult = await tools.agent.LocationTools.getCurrentLocation();
 
+    // Return everything for your introduction
+    return {
+      name: nameResult.data.name,
+      spirit: spirit,
+      style: nameResult.data.style,
+      time: timeResult.data.local,
+      iso: timeResult.data.iso,
+      location: locationResult.data.city,
+      country: locationResult.data.country,
+      timezone: timeResult.data.timezone
+    };
+  `);
+
+  // Display results
+  console.log("\n🎉 Agent Identity Established!");
+  console.log("=================================");
+  console.log(`🦊 Agent Name: ${result.returned.name}`);
+  console.log(`🎭 Spirit: ${result.returned.spirit}`);
+  console.log(`📝 Style: ${result.returned.style}`);
+  console.log(`⏰ Time: ${result.returned.time}`);
+  console.log(`🌍 Location: ${result.returned.location}, ${result.returned.country}`);
+  console.log(`🌐 Timezone: ${result.returned.timezone}`);
+  
   console.log("\n✅ Agent Startup Sequence Complete!");
   console.log("All tools are working with native TypeScript implementation.");
+  console.log("\n💡 Use this information to introduce yourself with personality!");
 
   // Clean up and exit
   cm.cleanup();
