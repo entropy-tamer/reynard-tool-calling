@@ -56,38 +56,112 @@ export class MessageHelpers {
 
   static generateDescription(
     categories: { code: string[]; tests: string[]; docs: string[]; config: string[] },
-    files: Array<{ path: string }>
+    files: Array<{ path: string; status: string }>
   ): string {
-    let description = "";
+    if (files.length === 0) {
+      return "no changes";
+    }
 
+    // Count files by status
+    const addedFiles = files.filter(f => f.status === "added");
+    const deletedFiles = files.filter(f => f.status === "deleted");
+    const renamedFiles = files.filter(f => f.status === "renamed");
+    const modifiedFiles = files.filter(f => f.status === "modified");
+
+    // Handle renames
+    if (renamedFiles.length > 0 && files.length === renamedFiles.length) {
+      if (renamedFiles.length === 1) {
+        const file = renamedFiles[0];
+        const fileName = file.path.split("/").pop() || file.path;
+        return `rename ${fileName}`;
+      }
+      return `rename ${renamedFiles.length} files`;
+    }
+
+    // Handle pure deletions
+    if (deletedFiles.length > 0 && addedFiles.length === 0 && modifiedFiles.length === 0) {
+      if (deletedFiles.length === 1) {
+        const file = deletedFiles[0];
+        const fileName = file.path.split("/").pop() || file.path;
+        return `remove ${fileName}`;
+      }
+      return `remove ${deletedFiles.length} files`;
+    }
+
+    // Handle pure additions
+    if (addedFiles.length > 0 && modifiedFiles.length === 0 && deletedFiles.length === 0) {
+      if (categories.code.length > 0) {
+        const codeFiles = addedFiles.filter(f => categories.code.includes(f.path));
+        if (codeFiles.length === 1) {
+          const file = codeFiles[0];
+          const fileName = file.path.split("/").pop()?.replace(/\.(ts|tsx|js|jsx|py|rs)$/, "") || file.path;
+          return `add ${fileName}`;
+        }
+        return `add ${codeFiles.length} ${codeFiles.length === 1 ? "file" : "files"}`;
+      }
+      if (categories.tests.length > 0) {
+        return `add ${categories.tests.length} ${categories.tests.length === 1 ? "test" : "tests"}`;
+      }
+      if (addedFiles.length === 1) {
+        const file = addedFiles[0];
+        const fileName = file.path.split("/").pop() || file.path;
+        return `add ${fileName}`;
+      }
+      return `add ${addedFiles.length} ${addedFiles.length === 1 ? "file" : "files"}`;
+    }
+
+    // Handle code changes
     if (categories.code.length > 0) {
       const codeFiles = files.filter(f => categories.code.includes(f.path));
       if (codeFiles.length === 1) {
-        const firstFile = codeFiles[0];
-        if (firstFile) {
-          const fileName =
-            firstFile.path
-              .split("/")
-              .pop()
-              ?.replace(/\.(ts|tsx|js|jsx|py)$/, "") || "";
-          description = `update ${fileName}`;
-        }
+        const file = codeFiles[0];
+        const fileName = file.path.split("/").pop()?.replace(/\.(ts|tsx|js|jsx|py|rs)$/, "") || file.path;
+        return `update ${fileName}`;
       } else if (codeFiles.length < 5) {
-        description = `update ${codeFiles.length} files`;
+        return `update ${codeFiles.length} ${codeFiles.length === 1 ? "file" : "files"}`;
       } else {
-        description = `update ${codeFiles.length} code files`;
+        return `update ${codeFiles.length} code files`;
       }
-    } else if (categories.tests.length > 0) {
-      description = `add tests for ${categories.tests.length > 1 ? "multiple components" : "component"}`;
-    } else if (categories.docs.length > 0) {
-      description = `update documentation`;
-    } else if (categories.config.length > 0) {
-      description = `update configuration`;
-    } else {
-      description = `update ${files.length} file${files.length > 1 ? "s" : ""}`;
     }
 
-    return description;
+    // Handle test changes
+    if (categories.tests.length > 0) {
+      if (addedFiles.some(f => categories.tests.includes(f.path))) {
+        return `add ${categories.tests.length} ${categories.tests.length === 1 ? "test" : "tests"}`;
+      }
+      return `update ${categories.tests.length} ${categories.tests.length === 1 ? "test" : "tests"}`;
+    }
+
+    // Handle documentation changes
+    if (categories.docs.length > 0) {
+      return `update documentation`;
+    }
+
+    // Handle config changes
+    if (categories.config.length > 0) {
+      return `update configuration`;
+    }
+
+    // Fallback: describe by status
+    if (files.length === 1) {
+      const file = files[0];
+      const fileName = file.path.split("/").pop() || file.path;
+      const action = file.status === "added" ? "add" : file.status === "deleted" ? "remove" : "update";
+      return `${action} ${fileName}`;
+    }
+
+    // Mixed changes
+    const parts: string[] = [];
+    if (addedFiles.length > 0) parts.push(`add ${addedFiles.length}`);
+    if (modifiedFiles.length > 0) parts.push(`update ${modifiedFiles.length}`);
+    if (deletedFiles.length > 0) parts.push(`remove ${deletedFiles.length}`);
+    if (renamedFiles.length > 0) parts.push(`rename ${renamedFiles.length}`);
+
+    if (parts.length > 0) {
+      return parts.join(", ");
+    }
+
+    return `update ${files.length} ${files.length === 1 ? "file" : "files"}`;
   }
 
   static detectBreakingChanges(
@@ -145,6 +219,7 @@ export class MessageHelpers {
     return body;
   }
 }
+
 
 
 

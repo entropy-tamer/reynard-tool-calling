@@ -8,6 +8,97 @@
 
 import { codemode } from "../codemode";
 
+/**
+ * Get emoji for a given spirit name
+ *
+ * @param spirit - The spirit name (e.g., "fox", "wolf", "otter")
+ * @returns The emoji character for the spirit, or 🦊 as fallback
+ * @example
+ * ```ts
+ * getSpiritEmoji("wolf") // Returns "🐺"
+ * getSpiritEmoji("dragon") // Returns "🐉"
+ * ```
+ */
+function getSpiritEmoji(spirit: string): string {
+  const emojiMap: Record<string, string> = {
+    fox: "🦊",
+    wolf: "🐺",
+    otter: "🦦",
+    dragon: "🐉",
+    eagle: "🦅",
+    lion: "🦁",
+    tiger: "🐅",
+    phoenix: "🔥",
+    alien: "👽",
+    yeti: "🧊",
+  };
+  return emojiMap[spirit.toLowerCase()] || "🦊"; // Default to fox if unknown
+}
+
+/**
+ * Display the agent identity results with appropriate emoji
+ *
+ * @param result - The agent identity result object
+ * @param result.name - The generated agent name
+ * @param result.spirit - The spirit type (e.g., "fox", "wolf", "otter")
+ * @param result.style - The naming style used
+ * @param result.time - The current local time
+ * @param result.location - The current city location
+ * @param result.country - The current country
+ * @param result.timezone - The current timezone
+ * @example
+ * ```ts
+ * displayAgentIdentity({
+ *   name: "Cunning-Scribe-42",
+ *   spirit: "fox",
+ *   style: "foundation",
+ *   time: "Sun Nov 16 2025 08:22:28 GMT+0100",
+ *   location: "Karlshagen",
+ *   country: "Germany",
+ *   timezone: "Europe/Berlin"
+ * });
+ * ```
+ */
+function displayAgentIdentity(result: {
+  name: string;
+  spirit: string;
+  style: string;
+  time: string;
+  location: string;
+  country: string;
+  timezone: string;
+}): void {
+  const spiritEmoji = getSpiritEmoji(result.spirit);
+
+  console.log("\n🎉 Agent Identity Established!");
+  console.log("=================================");
+  console.log(`${spiritEmoji} Agent Name: ${result.name}`);
+  console.log(`🎭 Spirit: ${result.spirit}`);
+  console.log(`📝 Style: ${result.style}`);
+  console.log(`⏰ Time: ${result.time}`);
+  console.log(`🌍 Location: ${result.location}, ${result.country}`);
+  console.log(`🌐 Timezone: ${result.timezone}`);
+
+  console.log("\n✅ Agent Startup Sequence Complete!");
+  console.log("All tools are working with native TypeScript implementation.");
+  console.log(`\n💡 CRITICAL: Now introduce yourself to the user in a friendly, warm manner!`);
+  console.log(`   Use your ${result.spirit} spirit's personality (${spiritEmoji}) to create an authentic greeting.`);
+  console.log("   Include your name, spirit, time, and ask how you can help.");
+  console.log("   Do NOT proceed with any tasks until you've introduced yourself!");
+}
+
+/**
+ * Main function to run the agent startup sequence
+ * Generates agent identity, gets temporal and location context, and displays results
+ *
+ * @example
+ * ```ts
+ * main().catch(error => {
+ *   console.error("Demo failed:", error);
+ *   process.exit(1);
+ * });
+ * ```
+ */
 async function main() {
   console.log("🦊 Starting Agent Startup Sequence");
   console.log("===================================");
@@ -25,6 +116,10 @@ async function main() {
   // Complete startup sequence - generate name, assign it, get context
   console.log("\n✨ Generating Agent Identity...");
   const result = await cm.executeCode(`
+    // IMPORTANT: After this startup sequence completes, you MUST introduce yourself
+    // to the user in a friendly, warm manner before proceeding with any tasks.
+    // Use your spirit's personality to create an authentic, memorable greeting!
+    
     // Step 1: Choose your spirit (randomly selected from available specialists)
     const specialists = ['fox', 'wolf', 'otter', 'eagle', 'lion'];
     const spirit = specialists[Math.floor(Math.random() * specialists.length)];
@@ -48,6 +143,8 @@ async function main() {
     const locationResult = await tools.agent.LocationTools.getCurrentLocation();
 
     // Return everything for your introduction
+    // REMEMBER: After receiving this data, immediately introduce yourself to the user
+    // in a friendly, warm way that reflects your spirit's personality!
     return {
       name: nameResult.data.name,
       spirit: spirit,
@@ -60,19 +157,7 @@ async function main() {
     };
   `);
 
-  // Display results
-  console.log("\n🎉 Agent Identity Established!");
-  console.log("=================================");
-  console.log(`🦊 Agent Name: ${result.returned.name}`);
-  console.log(`🎭 Spirit: ${result.returned.spirit}`);
-  console.log(`📝 Style: ${result.returned.style}`);
-  console.log(`⏰ Time: ${result.returned.time}`);
-  console.log(`🌍 Location: ${result.returned.location}, ${result.returned.country}`);
-  console.log(`🌐 Timezone: ${result.returned.timezone}`);
-  
-  console.log("\n✅ Agent Startup Sequence Complete!");
-  console.log("All tools are working with native TypeScript implementation.");
-  console.log("\n💡 Use this information to introduce yourself with personality!");
+  displayAgentIdentity(result.returned);
 
   // Clean up and exit
   cm.cleanup();

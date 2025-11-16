@@ -45,7 +45,8 @@
     "playwright-install": "playwright install chromium",
     "protein-analysis": "tsx ./src/codemode/examples/protein-analysis-demo.ts",
     "protein-analysis-simple": "tsx ./src/codemode/examples/protein-analysis-simple.ts",
-    "startup-sequence": "tsx ./src/codemode/examples/startup-sequence-demo.ts"
+    "startup-sequence": "tsx ./src/codemode/examples/startup-sequence-demo.ts",
+    "fft-visualizer": "tsx ./src/codemode/examples/fft-visualizer-synthetic-demo.ts"
   },
   "keywords": [
     "ai",
@@ -73,14 +74,14 @@
     "@entropy-tamer/reynard-queue-watcher": "workspace:*"
   },
   "devDependencies": {
-    "@types/node": "24.10.0",
-    "@vitest/coverage-v8": "4.0.8",
-    "@vitest/ui": "4.0.8",
+    "@types/node": "24.10.1",
+    "@vitest/coverage-v8": "4.0.9",
+    "@vitest/ui": "4.0.9",
     "tsx": "4.20.6",
     "typescript": "5.9.3",
     "vite": "7.2.2",
     "vite-plugin-solid": "2.11.10",
-    "vitest": "4.0.8"
+    "vitest": "4.0.9"
   },
   "peerDependencies": {
     "solid-js": "1.9.10"
